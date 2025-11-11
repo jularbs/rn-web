@@ -57,3 +57,19 @@ export const splitContentExcludingEmbeds = (htmlContent: string) => {
       return `${ReplaceHtmlEntities(processedNode)}`;
     });
   };
+
+export function getImageSource(media: { key?: string; bucket?: string; location?: string; url?: string }): string {
+  if (media?.url) {
+    return media.url;
+  }
+
+  if (media?.location) {
+    return media.location;
+  }
+
+  if (media?.key && media?.bucket) {
+    return `${process.env.NEXT_PUBLIC_API_ENDPOINT}/v1/media?key=${media.key}&bucket=${media.bucket}`;
+  }
+
+  return media?.location || "";
+}
