@@ -8,6 +8,7 @@ import Image from "next/image";
 import { karla } from "./fonts";
 import { SelectedStationWrapper } from "@/context/StationWrapper";
 import { MobileBottomNav } from "@/components/navigation/MobileBottomNav";
+import { AudioPlayerWrapper } from "@/context/AudioPlayerWrapper";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -27,33 +28,32 @@ export default async function RootLayout({
   return (
     <html lang="en" className={karla.className}>
       <body className={`antialiased !pointer-events-auto min-h-screen md:pb-radioplayer-height-md pb-[calc(var(--spacing-mobile-bottom-nav-height)+var(--spacing-radioplayer-height-md))]`}>
-        <div className="flex flex-col md:flex-row max-w-container-width mx-auto">
-          <Sidebar />
-          <div className="flex-1">
-            <div className="hidden md:flex w-full bg-greyspace h-logo-container-height-md items-center justify-center">
-              <div className="relative h-[90px] w-full max-w-[728px] bg-gray-300">
-                <Image src={`https://picsum.photos/600/400?random=${Math.floor(Math.random() * 10) + 1}`} alt="Sample"
-                  fill
-                  className="inset-0 object-cover" />
-              </div>
-            </div>
-            <div className="flex md:flex sticky top-0 z-30">
-              <div className="flex w-full gap-5 bg-greyspace h-searchbar-container-height items-center">
-                <div className="px-5 flex-1 relative">
-                  <Input placeholder="Search..." className="bg-white shadow-none border-0 pr-8" />
-                  <Search className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-black mr-2" />
-                </div>
-                <div className="hidden xl:block xl:w-right-sidebar-width" />
-              </div>
-            </div>
-            <SelectedStationWrapper defaultStation={selectedStation.data}>
-              {children}
-              <RadioPlayer />
-              <MobileBottomNav />
-            </SelectedStationWrapper>
-          </div>
-        </div>
+        <SelectedStationWrapper defaultStation={selectedStation.data}>
+          <AudioPlayerWrapper defaultSource={selectedStation.data.audioStreamURL}>
+            <div className="flex flex-col md:flex-row max-w-container-width mx-auto">
+              <Sidebar />
+              <div className="flex-1">
+                <div className="hidden md:flex w-full bg-greyspace h-logo-container-height-md items-center justify-center">
+                  <div className="relative h-[90px] w-full max-w-[728px] bg-gray-300">
 
+                  </div>
+                </div>
+                <div className="flex md:flex sticky top-0 z-30">
+                  <div className="flex w-full gap-5 bg-greyspace h-searchbar-container-height items-center">
+                    <div className="px-5 flex-1 relative">
+                      <Input placeholder="Search..." className="bg-white shadow-none border-0 pr-8" />
+                      <Search className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-black mr-2" />
+                    </div>
+                    <div className="hidden xl:block xl:w-right-sidebar-width" />
+                  </div>
+                </div>
+                {children}
+                <RadioPlayer />
+                <MobileBottomNav />
+              </div>
+            </div>
+          </AudioPlayerWrapper>
+        </SelectedStationWrapper>
       </body>
     </html>
   );
