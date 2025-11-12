@@ -20,16 +20,12 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  //Fetch default station data to initialize context
-  const selectedStation = await fetch(process.env.NEXT_PUBLIC_API_BASE_URL + "/v1/stations/default", {
-    cache: "no-store",
-  }).then((res) => res.json());
 
   return (
     <html lang="en" className={karla.className}>
       <body className={`antialiased !pointer-events-auto min-h-screen md:pb-radioplayer-height-md pb-[calc(var(--spacing-mobile-bottom-nav-height)+var(--spacing-radioplayer-height-md))]`}>
-        <SelectedStationWrapper defaultStation={selectedStation.data}>
-          <AudioPlayerWrapper defaultSource={selectedStation.data.audioStreamURL}>
+        <AudioPlayerWrapper>
+          <SelectedStationWrapper>
             <div className="flex flex-col md:flex-row max-w-container-width mx-auto">
               <Sidebar />
               <div className="flex-1">
@@ -52,8 +48,8 @@ export default async function RootLayout({
                 <MobileBottomNav />
               </div>
             </div>
-          </AudioPlayerWrapper>
-        </SelectedStationWrapper>
+          </SelectedStationWrapper>
+        </AudioPlayerWrapper>
       </body>
     </html>
   );

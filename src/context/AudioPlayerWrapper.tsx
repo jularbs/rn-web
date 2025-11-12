@@ -20,7 +20,6 @@ interface AudioPlayerContextProps {
 
 interface AudioPlayerWrapperProps {
     children: React.ReactNode;
-    defaultSource?: string;  // New optional prop
 }
 const AudioPlayerContext = createContext<AudioPlayerContextProps>({
     audioSource: "",
@@ -37,8 +36,8 @@ const AudioPlayerContext = createContext<AudioPlayerContextProps>({
     setAudioError: () => { },
 });
 
-export function AudioPlayerWrapper({ children, defaultSource }: AudioPlayerWrapperProps) {
-    const [audioSource, setAudioSource] = useState<string>(defaultSource ?? "");
+export function AudioPlayerWrapper({ children }: AudioPlayerWrapperProps) {
+    const [audioSource, setAudioSource] = useState<string>("");
     const [audioVolume, setAudioVolume] = useState<number>(0.8);
     const [isAudioMuted, setIsAudioMuted] = useState<boolean>(false);
     const [isAudioPlaying, setIsAudioPlaying] = useState<boolean>(false);
