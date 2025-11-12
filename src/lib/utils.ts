@@ -73,3 +73,22 @@ export function getImageSource(media: { key?: string; bucket?: string; location?
 
   return media?.location || "";
 }
+
+// Convert 24-hour time (HH:MM:SS) to 12-hour format (HH:MM AM/PM)
+export function convertTo12HourFormat(time24: string): string {
+  // Parse the time string
+  const [hours, minutes] = time24.split(':').map(Number);
+  
+  // Determine AM/PM
+  const period = hours >= 12 ? 'PM' : 'AM';
+  
+  // Convert hours to 12-hour format
+  let hours12 = hours % 12;
+  hours12 = hours12 === 0 ? 12 : hours12; // Convert 0 to 12 for midnight
+  
+  // Format with leading zeros for minutes
+  const formattedMinutes = minutes.toString().padStart(2, '0');
+  
+  return `${hours12}:${formattedMinutes} ${period}`;
+}
+
