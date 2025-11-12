@@ -10,6 +10,7 @@ import { MdRadio } from "react-icons/md";
 import { useEffect, useState } from "react";
 import { useSelectedStationContext } from "@/context/StationWrapper";
 import { IoCall } from "react-icons/io5";
+import Link from "next/link";
 import { LinkWithStationQuery } from "../LinkWithStationQuery";
 
 export function Sidebar({ }): React.JSX.Element {
@@ -39,7 +40,7 @@ export function Sidebar({ }): React.JSX.Element {
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         priority
                     ></Image>
-                    <LinkWithStationQuery href="/"
+                    <Link href="/"
                         onClick={() => setIsMenuOpen(false)}>
                         <Image
                             src="/logo.png"
@@ -48,7 +49,7 @@ export function Sidebar({ }): React.JSX.Element {
                             width={100}
                             height={100}
                         />
-                    </LinkWithStationQuery>
+                    </Link>
                     <div className="relative md:hidden">
                         <MenuIcon size={24} className="text-white"
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -69,10 +70,7 @@ export function Sidebar({ }): React.JSX.Element {
                                 <span>Home</span>
                             </li>
                         </LinkWithStationQuery>
-                        <LinkWithStationQuery href={{
-                            pathname: "/station",
-                            query: !selectedStation?.default && selectedStation?.slug ? { station: selectedStation.slug } : undefined
-                        }}
+                        <LinkWithStationQuery href={"/station"}
                             onClick={() => setIsMenuOpen(false)}
                         >
                             <li className="flex gap-2 items-center py-3 uppercase font-semibold text-grey-header">
@@ -141,7 +139,7 @@ export function Sidebar({ }): React.JSX.Element {
                         className="h-[300px] w-full"
                         dangerouslySetInnerHTML={{ __html: selectedStation?.mapEmbedCode as string }} />
                 )}
-                {selectedStation?.socialLinks && Object.values(selectedStation.socialLinks).some(LinkWithStationQuery => LinkWithStationQuery && LinkWithStationQuery !== "") && (
+                {selectedStation?.socialLinks && Object.values(selectedStation.socialLinks).some(link => link && link !== "") && (
                     <div className="my-5 px-10">
                         <h2 className="mb-3 font-bold uppercase">Connect With Us</h2>
                         <ul className="flex justify-center gap-5">
@@ -217,7 +215,7 @@ export function Sidebar({ }): React.JSX.Element {
                     <p className="text-xs text-gray-500">Copyright &copy; {new Date().getFullYear()} RADYO NATIN NATIONWIDE</p>
                 </div>
             </div>
-        </div>
+        </div >
     )
 
 }
