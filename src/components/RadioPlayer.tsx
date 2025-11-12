@@ -11,7 +11,7 @@ export function RadioPlayer({ }): React.JSX.Element {
     const { selectedStation } = useSelectedStationContext();
 
     return (
-        <div className="fixed md:bottom-0 bottom-mobile-bottom-nav-height left-0 h-radioplayer-height-md w-full z-50 flex items-center bg-radyonatin-yellow">
+        <div className="fixed md:bottom-0 bottom-mobile-bottom-nav-height left-0 h-radioplayer-height-md w-full z-30 flex items-center bg-radyonatin-yellow">
             <div className="hidden text-nowrap xl:flex h-full items-center justify-center text-white font-extrabold pl-5 pr-10 uppercase bg-radyonatin-blue rounded-r-full">
                 Now Playing!
             </div>

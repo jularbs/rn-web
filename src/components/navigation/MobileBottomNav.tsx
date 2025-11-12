@@ -5,7 +5,7 @@ import { HouseIcon, LayoutGridIcon, MusicIcon, PlayIcon, TrendingUpIcon } from "
 export function MobileBottomNav({ }): React.JSX.Element {
     return (
         <div className={cn(open_sans.className,
-            "fixed bottom-0 left-0 h-mobile-bottom-nav-height w-full md:hidden z-50 flex items-center bg-greyspace border-t border-gray-300"
+            "fixed bottom-0 left-0 h-mobile-bottom-nav-height w-full md:hidden z-30 flex items-center bg-greyspace border-t border-gray-300"
         )}>
             <div className="w-full flex justify-around">
                 <div className="flex flex-col items-center gap-1">

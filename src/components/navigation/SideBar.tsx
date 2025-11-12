@@ -20,7 +20,7 @@ export function Sidebar({ }): React.JSX.Element {
         }
     }, [isMenuOpen])
     return (
-        <div className={cn("sticky top-0 left-0 h-full w-full md:max-w-sidebar-width bg-greyspace z-60",
+        <div className={cn("sticky top-0 left-0 h-full w-full md:max-w-sidebar-width bg-greyspace z-40",
             open_sans.className
         )}>
             <div className="h-logo-container-height md:h-logo-container-height-md w-full text-white flex">

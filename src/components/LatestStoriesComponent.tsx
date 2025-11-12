@@ -9,10 +9,10 @@ export function LatestStoriesComponent({ }) {
                 <Link href="/post/sample-post" key={index}>
                     <div className={`group grid grid-cols-5 gap-2`}>
                         <div className="relative aspect-3/2 bg-gray-200 rounded-xl overflow-hidden col-span-2 border border-black">
-                            <div className="absolute inset-0 bg-gradient-to-t from-blue-gradient-start opacity-80 mt-1/3 z-40" />
                             <Image src={`https://picsum.photos/600/400?random=${index}`} alt="Sample"
                                 fill
                                 className="absolute inset-0 object-cover transition-transform duration-300 group-hover:scale-110" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-blue-gradient-start opacity-80 mt-1/3" />
                         </div>
                         <div className="col-span-3">
                             <h4 className="text-sm font-extrabold leading-tight line-clamp-2 group-hover:underline">established fact that a reader will be distracted by the readable content</h4>

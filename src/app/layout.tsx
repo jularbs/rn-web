@@ -37,7 +37,7 @@ export default async function RootLayout({
                   className="inset-0 object-cover" />
               </div>
             </div>
-            <div className="flex md:flex sticky top-0 z-50">
+            <div className="flex md:flex sticky top-0 z-30">
               <div className="flex w-full gap-5 bg-greyspace h-searchbar-container-height items-center">
                 <div className="px-5 flex-1 relative">
                   <Input placeholder="Search..." className="bg-white shadow-none border-0 pr-8" />
