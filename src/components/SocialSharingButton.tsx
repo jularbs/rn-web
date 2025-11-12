@@ -26,27 +26,34 @@ import {
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 
-const SocialSharingButton = ({ className }: { className: string }) => {
+const SocialSharingButton = ({ className, children }: { className: string, children?: React.ReactNode }) => {
     const pathname = usePathname();
+    const searchParams = useSearchParams();
     const [url, setUrl] = useState("");
     const [isCopied, setIsCopied] = useState(false);
 
     useEffect(() => {
         setIsCopied(false);
-        setUrl(`${process.env.NEXT_PUBLIC_DOMAIN}${pathname}`);
-    }, [pathname]);
+        const params = searchParams.toString();
+        const fullUrl = params ? `${process.env.NEXT_PUBLIC_DOMAIN}${pathname}?${params}` : `${process.env.NEXT_PUBLIC_DOMAIN}${pathname}`;
+        setUrl(fullUrl);
+    }, [pathname, searchParams]);
 
     return (
         <Drawer>
             <DrawerTrigger>
-                <div className={cn(className,
-                    "bg-radyonatin-red rounded-full flex justify-center items-center"
-                )}>
-                    <MdMoreHoriz className="text-white text-3xl" />
-                </div>
+                {children ? children : <>
+                    <div className={cn(className,
+                        "bg-radyonatin-red rounded-full flex justify-center items-center"
+                    )}>
+                        <MdMoreHoriz className="text-white text-3xl" />
+                    </div>
+                </>
+                }
+
             </DrawerTrigger>
             <DrawerContent className="max-w-4xl mx-auto">
                 <DrawerClose>
