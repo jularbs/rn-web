@@ -4,7 +4,6 @@ import { LatestStoriesComponent } from "@/components/LatestStoriesComponent";
 import SocialSharingButton from "@/components/SocialSharingButton";
 import TwitterShareComponent from "@/components/TwitterShareComponent";
 import Image from "next/image";
-import ReactPlayer from 'react-player'
 
 export default function watch() {
 
@@ -13,7 +12,6 @@ export default function watch() {
             <div className="flex-1">
                 <h1 className="text-3xl font-extrabold mb-5 text-grey-header">WATCH LIVE!</h1>
                 <div className="aspect-video w-full bg-gray-200 flex justify-center items-center">
-                    <ReactPlayer src='https://www.youtube.com/watch?v=LXb3EKWsInQ' width={"100%"} height={"100%"} />
                 </div>
                 {/* TODOS: Set font to Karla */}
                 <p className="text-2xl font-extrabold my-3">Radio Natin Nationwide</p>
