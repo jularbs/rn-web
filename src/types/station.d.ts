@@ -15,6 +15,13 @@ export interface IStation {
   videoStreamURL?: string;
   status: "active" | "inactive";
   default: boolean;
+  socialLinks?: {
+    facebook?: string;
+    youtube?: string;
+    twitter?: string;
+    instagram?: string;
+    tiktok?: string;
+  };
   createdAt: Date;
   updatedAt: Date;
 }
