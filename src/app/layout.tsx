@@ -7,6 +7,7 @@ import { Search } from "lucide-react";
 import Image from "next/image";
 import { karla } from "./fonts";
 import { SelectedStationWrapper } from "@/context/StationWrapper";
+import { MobileBottomNav } from "@/components/navigation/MobileBottomNav";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -25,7 +26,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={karla.className}>
-      <body className={`antialiased !pointer-events-auto min-h-screen pb-radioplayer-height-md`}>
+      <body className={`antialiased !pointer-events-auto min-h-screen md:pb-radioplayer-height-md pb-[calc(var(--spacing-mobile-bottom-nav-height)+var(--spacing-radioplayer-height-md))]`}>
         <div className="flex flex-col md:flex-row max-w-container-width mx-auto">
           <Sidebar />
           <div className="flex-1">
@@ -36,7 +37,7 @@ export default async function RootLayout({
                   className="inset-0 object-cover" />
               </div>
             </div>
-            <div className="sticky top-0 z-50">
+            <div className="flex md:flex sticky top-0 z-50">
               <div className="flex w-full gap-5 bg-greyspace h-searchbar-container-height items-center">
                 <div className="px-5 flex-1 relative">
                   <Input placeholder="Search..." className="bg-white shadow-none border-0 pr-8" />
@@ -48,6 +49,7 @@ export default async function RootLayout({
             <SelectedStationWrapper defaultStation={selectedStation.data}>
               {children}
               <RadioPlayer />
+              <MobileBottomNav />
             </SelectedStationWrapper>
           </div>
         </div>

@@ -11,11 +11,11 @@ export function RadioPlayer({ }): React.JSX.Element {
     const { selectedStation } = useSelectedStationContext();
 
     return (
-        <div className="fixed bottom-0 left-0 h-radioplayer-height-md w-full z-50 flex items-center bg-radyonatin-yellow">
+        <div className="fixed md:bottom-0 bottom-mobile-bottom-nav-height left-0 h-radioplayer-height-md w-full z-50 flex items-center bg-radyonatin-yellow">
             <div className="hidden text-nowrap xl:flex h-full items-center justify-center text-white font-extrabold pl-5 pr-10 uppercase bg-radyonatin-blue rounded-r-full">
                 Now Playing!
             </div>
-            <div className="flex flex-1 gap-2 items-center px-3 text-radyonatin-blue">
+            <div className="flex flex-1 gap-1 lg:gap-2 items-center px-1 lg:px-3 text-radyonatin-blue">
                 <div className="relative size-10 shrink-0 rounded-sm">
                     {selectedStation?.logoImage && (
                         <Image
@@ -33,7 +33,7 @@ export function RadioPlayer({ }): React.JSX.Element {
                 <div className="flex lg:gap-2 items-start lg:items-center flex-col lg:flex-row">
                     <p className="font-extrabold leading-4 line-clamp-2 uppercase text-sm lg:text-base">{selectedStation?.name} {selectedStation?.frequency}</p>
                     <div className="hidden lg:flex bg-radyonatin-blue h-3.5 w-px" />
-                    <div className="text-xs lg:text-sm text-nowrap">7:00pm - 8:00pm</div>
+                    <div className="text-xs leading-4 lg:text-sm text-nowrap">7:00pm - 8:00pm</div>
                 </div>
             </div>
             <div className="hidden lg:flex bg-radyonatin-blue h-12 w-px" />
