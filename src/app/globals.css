@@ -51,7 +51,7 @@
   --color-radyonatin-red: #e41e25;
   --color-blue-gradient-start: #282e7f;
   --color-grey-header: #373435;
-  --color-fb-blue: #3B5999;
+  --color-fb-blue: #3b5999;
   --color-fb-blue-hover: #2d4373;
 
   --spacing-sidebar-width: 350px;
@@ -156,6 +156,18 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+.iframe-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+
+  iframe {
+    width: 100% !important;
+    height: 100% !important;
+    border: none;
   }
 }
 

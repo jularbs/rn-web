@@ -62,37 +62,6 @@ export function Sidebar({ }): React.JSX.Element {
                 isMenuOpen ? "h-[calc(100vh-var(--spacing-logo-container-height))]" : "h-0",
                 "md:h-[calc(100vh-(var(--spacing-logo-container-height-md))-(var(--spacing-radioplayer-height-md)))]"
             )}> {/* Adjust height to account for header and radio player */}
-                <div className="my-5 px-10">
-                    <ul>
-                        <LinkWithStationQuery href="/" onClick={() => setIsMenuOpen(false)}>
-                            <li className="flex gap-2 items-center py-3 uppercase font-semibold text-grey-header">
-                                <FaHome size={24} />
-                                <span>Home</span>
-                            </li>
-                        </LinkWithStationQuery>
-                        <LinkWithStationQuery href={"/station"}
-                            onClick={() => setIsMenuOpen(false)}
-                        >
-                            <li className="flex gap-2 items-center py-3 uppercase font-semibold text-grey-header">
-                                <MdRadio size={24} />
-                                <span>Listen Live</span>
-                            </li>
-                        </LinkWithStationQuery>
-                        <LinkWithStationQuery href="/watch" onClick={() => setIsMenuOpen(false)}>
-                            <li className="flex gap-2 items-center py-3 uppercase font-semibold text-grey-header">
-                                <FaPlay size={22} />
-                                <span>Watch Live</span>
-                            </li>
-                        </LinkWithStationQuery>
-                        <LinkWithStationQuery href="/jocks" onClick={() => setIsMenuOpen(false)}>
-                            <li className="flex gap-2 items-center py-3 uppercase font-semibold text-grey-header">
-                                <FaMusic size={22} />
-                                <span>Programs</span>
-                            </li>
-                        </LinkWithStationQuery>
-                    </ul>
-                </div>
-                <hr className="border-t border-gray-300 mx-10" />
                 {selectedStation && !selectedStation.default && (
                     <>
                         <div className="my-5 px-5 grid gap-5">
@@ -136,9 +105,40 @@ export function Sidebar({ }): React.JSX.Element {
                 )}
                 {selectedStation && !selectedStation.default && selectedStation.mapEmbedCode && (
                     <div
-                        className="h-[300px] w-full"
+                        className="iframe-container h-[300px] w-full overflow-scroll"
                         dangerouslySetInnerHTML={{ __html: selectedStation?.mapEmbedCode as string }} />
                 )}
+                <div className="my-5 px-10">
+                    <ul>
+                        <LinkWithStationQuery href="/" onClick={() => setIsMenuOpen(false)}>
+                            <li className="flex gap-2 items-center py-3 uppercase font-semibold text-grey-header">
+                                <FaHome size={24} />
+                                <span>Home</span>
+                            </li>
+                        </LinkWithStationQuery>
+                        <LinkWithStationQuery href={"/station"}
+                            onClick={() => setIsMenuOpen(false)}
+                        >
+                            <li className="flex gap-2 items-center py-3 uppercase font-semibold text-grey-header">
+                                <MdRadio size={24} />
+                                <span>Listen Live</span>
+                            </li>
+                        </LinkWithStationQuery>
+                        <LinkWithStationQuery href="/watch" onClick={() => setIsMenuOpen(false)}>
+                            <li className="flex gap-2 items-center py-3 uppercase font-semibold text-grey-header">
+                                <FaPlay size={22} />
+                                <span>Watch Live</span>
+                            </li>
+                        </LinkWithStationQuery>
+                        <LinkWithStationQuery href="/jocks" onClick={() => setIsMenuOpen(false)}>
+                            <li className="flex gap-2 items-center py-3 uppercase font-semibold text-grey-header">
+                                <FaMusic size={22} />
+                                <span>Programs</span>
+                            </li>
+                        </LinkWithStationQuery>
+                    </ul>
+                </div>
+                <hr className="border-t border-gray-300 mx-10" />
                 {selectedStation?.socialLinks && Object.values(selectedStation.socialLinks).some(link => link && link !== "") && (
                     <div className="my-5 px-10">
                         <h2 className="mb-3 font-bold uppercase">Connect With Us</h2>
@@ -197,7 +197,7 @@ export function Sidebar({ }): React.JSX.Element {
                     </div>
                 )}
                 <div className="my-5 flex items-center justify-center">
-                    <div className="relative h-[250px] w-[300px] bg-gray-300 my-5">
+                    <div className="relative h-[250px] w-[300px] bg-gray-300">
                     </div>
                 </div>
                 <hr className="border-t border-gray-300 mx-10" />
