@@ -33,7 +33,6 @@ export function SelectedStationWrapper({ children }: SelectedStationWrapperProps
             const stationSlug = params.get("station");
             fetch(process.env.NEXT_PUBLIC_API_BASE_URL + "/v1/stations/" + stationSlug).then(res => res.json())
                 .then(data => {
-                    console.log("provided slug station: ", data)
                     if (data.data) {
                         setSelectedStation(data.data)
                         if (data.data.audioStreamURL) {
@@ -41,12 +40,10 @@ export function SelectedStationWrapper({ children }: SelectedStationWrapperProps
                         }
                     }
                 })
-            console.log("Station slug from URL:", stationSlug);
         } else {
             // get default station if station query params is undefined
             fetch(process.env.NEXT_PUBLIC_API_BASE_URL + "/v1/stations/default").then(res => res.json())
                 .then(data => {
-                    console.log("default station: ", data)
                     if (data.data) {
                         setSelectedStation(data.data)
                         if (data.data.audioStreamURL) {
