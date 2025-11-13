@@ -29,7 +29,7 @@ import { Input } from "@/components/ui/input";
 import { usePathname, useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 
-const SocialSharingButton = ({ className, children }: { className: string, children?: React.ReactNode }) => {
+const SocialSharingButton = ({ className, path, children }: { className: string, path?: string, children?: React.ReactNode }) => {
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const [url, setUrl] = useState("");
@@ -38,9 +38,9 @@ const SocialSharingButton = ({ className, children }: { className: string, child
     useEffect(() => {
         setIsCopied(false);
         const params = searchParams.toString();
-        const fullUrl = params ? `${process.env.NEXT_PUBLIC_DOMAIN}${pathname}?${params}` : `${process.env.NEXT_PUBLIC_DOMAIN}${pathname}`;
+        const fullUrl = params ? `${process.env.NEXT_PUBLIC_DOMAIN}${path ?? pathname}?${params}` : `${process.env.NEXT_PUBLIC_DOMAIN}${path ?? pathname}`;
         setUrl(fullUrl);
-    }, [pathname, searchParams]);
+    }, [pathname, searchParams, path]);
 
     return (
         <Drawer>
