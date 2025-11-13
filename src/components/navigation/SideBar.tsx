@@ -2,20 +2,20 @@
 "use client";
 import { open_sans } from "@/app/fonts";
 import { cn } from "@/lib/utils";
-import { AtSignIcon, MenuIcon } from "lucide-react";
+import { MenuIcon, Undo2Icon } from "lucide-react";
 import Image from "next/image";
-import { FaFacebook, FaHome, FaInstagram, FaMapMarkerAlt, FaPlay, FaTiktok } from "react-icons/fa";
+import { FaFacebook, FaHome, FaInstagram, FaPlay, FaTiktok } from "react-icons/fa";
 import { FaMusic, FaXTwitter, FaYoutube } from "react-icons/fa6";
 import { MdRadio } from "react-icons/md";
 import { useEffect, useState } from "react";
 import { useSelectedStationContext } from "@/context/StationWrapper";
-import { IoCall } from "react-icons/io5";
 import Link from "next/link";
 import { LinkWithStationQuery } from "../LinkWithStationQuery";
+import { Button } from "../ui/button";
 
 export function Sidebar({ }): React.JSX.Element {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const { selectedStation } = useSelectedStationContext();
+    const { selectedStation, resetSelectedStationToDefault } = useSelectedStationContext();
 
     useEffect(() => {
         if (isMenuOpen) {
@@ -62,54 +62,21 @@ export function Sidebar({ }): React.JSX.Element {
                 isMenuOpen ? "h-[calc(100vh-var(--spacing-logo-container-height))]" : "h-0",
                 "md:h-[calc(100vh-(var(--spacing-logo-container-height-md))-(var(--spacing-radioplayer-height-md)))]"
             )}> {/* Adjust height to account for header and radio player */}
-                {selectedStation && !selectedStation.default && (
-                    <>
-                        <div className="my-5 px-5 grid gap-5">
-                            <div>
-                                <p className="text-lg font-bold">{selectedStation.name}</p>
-                            </div>
-                            {selectedStation.address && (
-                                <div className="flex items-center gap-3">
-                                    <div className="w-5 h-5 flex items-center justify-center">
-                                        <FaMapMarkerAlt size={20} />
-                                    </div>
-                                    <p>
-                                        {selectedStation.address}
-                                    </p>
-                                </div>
-                            )}
-                            {selectedStation.email && (
-                                <div className="flex items-center gap-3">
-                                    <div className="w-5 h-5 flex items-center justify-center">
-                                        <AtSignIcon size={20} />
-                                    </div>
-                                    <p>
-                                        {selectedStation.email}
-                                    </p>
-                                </div>
-                            )}
-                            {selectedStation.contactNumber && (
-                                <div className="flex items-center gap-3">
-                                    <div className="w-5 h-5 flex items-center justify-center">
-                                        <IoCall size={20} />
-                                    </div>
-                                    <p>
-                                        {selectedStation.contactNumber}
-                                    </p>
-                                </div>
-                            )}
-                        </div>
-                        <hr className="border-t border-gray-300 mx-10" />
-                    </>
-
-                )}
-                {selectedStation && !selectedStation.default && selectedStation.mapEmbedCode && (
-                    <div
-                        className="iframe-container h-[300px] w-full overflow-scroll"
-                        dangerouslySetInnerHTML={{ __html: selectedStation?.mapEmbedCode as string }} />
-                )}
                 <div className="my-5 px-10">
                     <ul>
+                        {selectedStation && !selectedStation.default && (
+                            <li>
+                                <Button
+                                    onClick={() => {
+                                        resetSelectedStationToDefault();
+                                        setIsMenuOpen(false);
+                                    }}
+                                    className="flex w-full bg-radyonatin-blue uppercase font-extrabold rounded-sm mb-2">
+                                    <Undo2Icon />
+                                    Return to Nationwide
+                                </Button>
+                            </li>
+                        )}
                         <LinkWithStationQuery href="/" onClick={() => setIsMenuOpen(false)}>
                             <li className="flex gap-2 items-center py-3 uppercase font-semibold text-grey-header">
                                 <FaHome size={24} />

@@ -7,14 +7,17 @@ import { useAudioPlayerContext } from "./AudioPlayerWrapper";
 interface SelectedStationContextProps {
     selectedStation: IStation | null;
     setSelectedStation: (station: IStation | null) => void;  // New optional prop
+    resetSelectedStationToDefault: () => void;
 }
 
 interface SelectedStationWrapperProps {
     children: React.ReactNode;
 }
+
 const SelectedStationContext = createContext<SelectedStationContextProps>({
     selectedStation: null,
     setSelectedStation: () => { },
+    resetSelectedStationToDefault: () => { }
 });
 
 export function SelectedStationWrapper({ children }: SelectedStationWrapperProps) {
@@ -23,6 +26,18 @@ export function SelectedStationWrapper({ children }: SelectedStationWrapperProps
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
+
+    const resetSelectedStationToDefault = () => {
+        fetch(process.env.NEXT_PUBLIC_API_BASE_URL + "/v1/stations/default").then(res => res.json())
+            .then(data => {
+                if (data.data) {
+                    setSelectedStation(data.data)
+                    if (data.data.audioStreamURL) {
+                        setAudioSource(data.data.audioStreamURL)
+                    }
+                }
+            })
+    }
 
     // get initial selectedStation on mount
     useEffect(() => {
@@ -42,15 +57,7 @@ export function SelectedStationWrapper({ children }: SelectedStationWrapperProps
                 })
         } else {
             // get default station if station query params is undefined
-            fetch(process.env.NEXT_PUBLIC_API_BASE_URL + "/v1/stations/default").then(res => res.json())
-                .then(data => {
-                    if (data.data) {
-                        setSelectedStation(data.data)
-                        if (data.data.audioStreamURL) {
-                            setAudioSource(data.data.audioStreamURL)
-                        }
-                    }
-                })
+            resetSelectedStationToDefault();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -74,6 +81,7 @@ export function SelectedStationWrapper({ children }: SelectedStationWrapperProps
             value={{
                 selectedStation,
                 setSelectedStation,
+                resetSelectedStationToDefault
             }}
         >
             {children}

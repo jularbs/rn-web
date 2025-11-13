@@ -1,4 +1,5 @@
 import { LatestStoriesComponent } from "@/components/LatestStoriesComponent";
+import { StationDetailsComponent } from "@/components/StationDetailsComponent";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -14,7 +15,7 @@ export default function Home() {
                 className="absolute inset-0 object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-blue-gradient-start opacity-80 mt-1/3" />
             </div>
-            <h2 className={`text-3xl leading-8 font-extrabold mt-5 mb-3`}>An unknown printer took a galley of type and scrambled it to make a
+            <h2 className={`text-xl md:text-2xl lg:text-3xl leading-[1.1] font-extrabold mt-5 mb-3`}>An unknown printer took a galley of type and scrambled it to make a
               type specimen book. It has survived not only five centuries</h2>
             <p className="text-sm font-medium">January 01, 2026</p>
           </div>
@@ -44,6 +45,7 @@ export default function Home() {
         </div>
       </div>
       <div className="w-full xl:w-right-sidebar-width">
+        <StationDetailsComponent />
         <LatestStoriesComponent />
         <div className="flex justify-center items-center mb-3">
           <div className="relative h-[250px] w-[300px] bg-gray-300 my-5">
