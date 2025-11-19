@@ -59,7 +59,7 @@ export default function Post() {
         <div className="flex flex-col xl:flex-row gap-5 p-5">
             <div className="flex-1">
                 <div className={open_sans.className}>
-                    <div className="relative aspect-3/2 w-full bg-gray-200 rounded-xl overflow-hidden">
+                    <div className="relative aspect-3/2 w-full bg-gray-200 rounded-md overflow-hidden">
                         <Image src={`https://picsum.photos/600/400`} alt="sample" fill
                             className="absolute inset-0 object-cover" />
                         <div className="absolute inset-0 bg-gradient-to-t from-blue-gradient-start opacity-80 mt-1/3" />

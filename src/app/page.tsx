@@ -9,7 +9,7 @@ export default function Home() {
       <div className="flex-1">
         <Link href="/post/sample-post" className="no-underline">
           <div className="">
-            <div className="relative aspect-3/2 w-full bg-gray-200 rounded-xl overflow-hidden">
+            <div className="relative aspect-3/2 w-full bg-gray-200 rounded-md overflow-hidden">
               <Image src={`https://picsum.photos/600/400?random=10`} alt="Sample"
                 fill
                 className="absolute inset-0 object-cover" />
@@ -25,7 +25,7 @@ export default function Home() {
           {new Array(8).fill({}).map((_, index) => (
             <Link href="/post/sample-post" key={index}>
               <div className="group">
-                <div className="aspect-3/2 w-full bg-gray-200 rounded-xl relative overflow-hidden">
+                <div className="aspect-3/2 w-full bg-gray-200 rounded-md relative overflow-hidden">
                   <Image src={`https://picsum.photos/600/400?random=${index}`} alt="Sample"
                     fill
                     className="absolute inset-0 object-cover group-hover:scale-110 transition-transform duration-300" />

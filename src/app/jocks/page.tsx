@@ -10,7 +10,7 @@ export default function Jocks() {
         <div className="flex flex-col xl:flex-row gap-5 p-5">
             <div className="flex-1">
                 <div className="flex flex-col gap-5">
-                    <div className="relative aspect-video w-full bg-gray-200 rounded-xl overflow-hidden flex justify-center items-center">
+                    <div className="relative aspect-video w-full bg-gray-200 rounded-md overflow-hidden flex justify-center items-center">
                         <Image src="/bg-blue-2.png" alt="Sample"
                             fill
                             className="absolute inset-0 object-cover" />
@@ -26,7 +26,7 @@ export default function Jocks() {
                     <p className="text-3xl font-extrabold mt-5 mb-3 ml-5 text-grey-header">Your Friend, Your Radio</p>
                     {new Array(8).fill({}).map((_, index) => (
                         <div className="grid grid-cols-3 gap-5 mb-3 xl:px-5" key={index}>
-                            <div className="relative aspect-4/5 w-full bg-gray-200 rounded-xl overflow-hidden">
+                            <div className="relative aspect-4/5 w-full bg-gray-200 rounded-md overflow-hidden">
                                 <Image src={`https://picsum.photos/600/400?random=${index}`} alt="Sample" fill
                                     className="absolute inset-0 object-cover object-top" />
                             </div>
