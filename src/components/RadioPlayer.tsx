@@ -101,7 +101,7 @@ export function RadioPlayer({ }): React.JSX.Element {
                 <div className="px-2 lg:px-5">
                     <Button
                         onClick={() => { setIsStationSelectorOpen(true) }}
-                        className="bg-radyonatin-blue text-white rounded-lg font-bold uppercase text-xs lg:text-sm px-3 py-2 lg:px-5">
+                        className="bg-radyonatin-blue text-white rounded-md font-bold uppercase text-xs lg:text-sm px-3 py-2 lg:px-5">
                         Choose station
                     </Button>
                 </div>

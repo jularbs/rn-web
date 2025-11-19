@@ -8,7 +8,7 @@ export function LatestStoriesComponent({ }) {
             {new Array(5).fill({}).map((_, index) => (
                 <Link href="/post/sample-post" key={index}>
                     <div className={`group grid grid-cols-5 gap-2`}>
-                        <div className="relative aspect-3/2 bg-gray-200 rounded-xl overflow-hidden col-span-2 border border-black">
+                        <div className="relative aspect-3/2 bg-gray-200 rounded-md overflow-hidden col-span-2 border border-black">
                             <Image src={`https://picsum.photos/600/400?random=${index}`} alt="Sample"
                                 fill
                                 className="absolute inset-0 object-cover transition-transform duration-300 group-hover:scale-110" />
