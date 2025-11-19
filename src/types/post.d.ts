@@ -55,8 +55,6 @@ export interface IPost {
   publisher?: string;
   focusKeyword?: string;
   readingTime?: string;
-  metaImage?: Types.ObjectId;
-  metaImageAlt?: string;
   createdAt: Date;
   updatedAt: Date;
 }
