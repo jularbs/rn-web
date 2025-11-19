@@ -66,7 +66,7 @@ export function RadioPlayer({ }): React.JSX.Element {
                     </div>
                 </div>
                 <div className="hidden lg:flex bg-radyonatin-blue h-12 w-px" />
-                <SocialSharingButton className="" >
+                <SocialSharingButton className="" path="/">
                     <div className="flex items-center">
                         <div className="text-radyonatin-blue px-2 lg:px-5 py-2">
                             <Share size={20} />
