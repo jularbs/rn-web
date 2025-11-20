@@ -14,11 +14,11 @@ import RadioPlayerStationSelector from "./RadioPlayerStationSelector";
 import { useState } from "react";
 import SocialSharingButton from "./SocialSharingButton";
 export function RadioPlayer({ }): React.JSX.Element {
-    const { selectedStation } = useSelectedStationContext();
+    const { selectedStation, isLoadingData } = useSelectedStationContext();
     const { isAudioLoading, audioError,
         setIsAudioPlaying, isAudioPlaying,
         audioVolume, setAudioVolume } = useAudioPlayerContext();
-    const { data: programData } = useSWR(selectedStation ? { url: "v1/programs/schedule/now?station=" + selectedStation._id } : null, fetcher);
+    const { data: programData, isLoading: isProgramLoading } = useSWR(selectedStation ? { url: "v1/programs/schedule/now?station=" + selectedStation._id } : null, fetcher);
     const [isStationSelectorOpen, setIsStationSelectorOpen] = useState(false);
 
     return (
@@ -29,7 +29,9 @@ export function RadioPlayer({ }): React.JSX.Element {
                     Now Playing!
                 </div>
                 <div className="flex flex-1 gap-1 lg:gap-2 items-center px-1 lg:px-3 text-radyonatin-blue">
-                    {programData && programData.data.length > 0 && programData.data[0].image ? (
+                    {(isLoadingData || isProgramLoading) ? (
+                        <div className="shrink-0 size-10 rounded-sm bg-neutral-200 animate-pulse" />
+                    ) : programData && programData.data.length > 0 && programData.data[0].image ? (
                         <div className="relative size-10 shrink-0 rounded-sm">
                             <Image
                                 src={getImageSource(programData.data[0].image)}
@@ -54,7 +56,9 @@ export function RadioPlayer({ }): React.JSX.Element {
                             />
                         </div>
                     ) : null}
-                    <div className="flex lg:gap-2 items-start lg:items-center flex-col lg:flex-row">
+                    {(isLoadingData || isProgramLoading) ? (
+                        <div className="w-40 h-4 bg-neutral-200 rounded-sm animate-pulse shrink-1"></div>
+                    ) : <div className="flex lg:gap-2 items-start lg:items-center flex-col lg:flex-row">
                         <p className="font-extrabold leading-4 line-clamp-2 uppercase text-sm lg:text-base">
                             {programData && programData.data.length > 0 ? programData.data[0]?.name : selectedStation?.name}
                         </p>
@@ -62,8 +66,8 @@ export function RadioPlayer({ }): React.JSX.Element {
                             <div className="hidden lg:flex bg-radyonatin-blue h-3.5 w-px" />
                             <div className="text-xs leading-4 lg:text-sm text-nowrap">{convertTo12HourFormat(programData.data[0].startTime)} - {convertTo12HourFormat(programData.data[0].endTime)}</div>
                         </>)}
-
                     </div>
+                    }
                 </div>
                 <div className="hidden lg:flex bg-radyonatin-blue h-12 w-px" />
                 <SocialSharingButton className="" path="/">
