@@ -8,7 +8,11 @@ import useSWR from "swr";
 
 export default function RadioPlayerStationSelector({ open, onOpenChange }:
     { open: boolean, onOpenChange: React.Dispatch<React.SetStateAction<boolean>>, type?: string }) {
-    const { data: stationList } = useSWR(open ? { url: "v1/stations" } : null, fetcher);
+    const { data: stationList } = useSWR(open ? {
+        url: "v1/stations", params: {
+            limit: 0
+        }
+    } : null, fetcher);
     const { setSelectedStation } = useSelectedStationContext();
     const { setAudioSource } = useAudioPlayerContext();
 
