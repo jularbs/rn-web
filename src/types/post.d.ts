@@ -1,16 +1,29 @@
+import { IMedia } from "./media";
+
+export enum PostType {
+  VideoArticle = "video article",
+  BasicArticle = "basic article",
+}
+export enum PostStatus {
+  Draft = "draft",
+  Published = "published",
+}
+import { Types } from "mongoose";
+import { IUser } from "./user";
+
 export interface IPost {
   _id: Types.ObjectId;
   title: string;
   slug: string;
   excerpt?: string;
   content: string;
-  author: Types.ObjectId;
-  categories: Types.ObjectId[];
-  tags: Types.ObjectId[];
+  author: Types.ObjectId | IUser;
+  categories: Types.ObjectId[] | ICategory[];
+  tags: Types.ObjectId[] | ITag[];
   type: PostType;
-  featuredImage?: Types.ObjectId;
+  featuredImage?: Types.ObjectId | IMedia;
   featuredImageCaption?: string;
-  thumbnailImage?: Types.ObjectId;
+  thumbnailImage?: Types.ObjectId | IMedia;
   videoSourceUrl?: string;
   videoDuration?: string;
   status: PostStatus;
@@ -38,7 +51,7 @@ export interface IPost {
   ogUrl?: string;
   ogSiteName?: string;
   ogLocale?: string;
-  ogImage?: Types.ObjectId;
+  ogImage?: Types.ObjectId | IMedia;
   ogImageAlt?: string;
 
   // Twitter Cards
@@ -47,7 +60,7 @@ export interface IPost {
   twitterDescription?: string;
   twitterSite?: string;
   twitterCreator?: string;
-  twitterImage?: Types.ObjectId;
+  twitterImage?: Types.ObjectId | IMedia;
   twitterImageAlt?: string;
 
   // Additional SEO
