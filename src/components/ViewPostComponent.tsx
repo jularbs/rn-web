@@ -51,7 +51,7 @@ export default function ViewPostComponent({ postData }: { postData: IPost }): Re
                     <h1 className="text-3xl font-extrabold my-3" ref={ref}>{postData.title}</h1>
                     {postData.publishedAt && <p className="text-sm">{format(postData.publishedAt, "PPP")}</p>}
                 </div>
-                {/* <ContentComponent content={postData.content} className={cn("mt-4 leading-loose font-semibold", open_sans.className)} /> */}
+                <ContentComponent content={postData.content} className={cn("mt-4 leading-loose font-semibold", open_sans.className)} />
                 {showTags()}
                 <div className="flex gap-2 mt-5 items-center font-semibold">
                     <span className="text-xs">Share</span>

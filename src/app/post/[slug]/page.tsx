@@ -101,7 +101,6 @@ export default async function Post({
 
         const postData = await res.json();
 
-        return <div></div>
         return <ViewPostComponent postData={postData} />
 
     } catch (error: unknown) {
