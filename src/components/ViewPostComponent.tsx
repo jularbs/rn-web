@@ -51,7 +51,7 @@ export default function ViewPostComponent({ postData }: { postData: IPost }): Re
                     <h1 className="text-3xl font-extrabold my-3" ref={ref}>{postData.title}</h1>
                     {postData.publishedAt && <p className="text-sm">{format(postData.publishedAt, "PPP")}</p>}
                 </div>
-                <ContentComponent content={postData.content} className={cn("mt-4 leading-loose font-semibold", open_sans.className)} />
+                {/* <ContentComponent content={postData.content} className={cn("mt-4 leading-loose font-semibold", open_sans.className)} /> */}
                 {showTags()}
                 <div className="flex gap-2 mt-5 items-center font-semibold">
                     <span className="text-xs">Share</span>
@@ -65,16 +65,10 @@ export default function ViewPostComponent({ postData }: { postData: IPost }): Re
                 <div className="sticky top-5">
                     <div className="flex justify-center items-center mb-3">
                         <div className="relative h-[250px] w-[300px] bg-gray-300 my-5">
-                            <Image src={`https://picsum.photos/600/400?random=${Math.floor(Math.random() * 10) + 1}`} alt="Sample"
-                                fill
-                                className="absolute inset-0 object-cover" />
                         </div>
                     </div>
                     <div className="flex justify-center items-center mb-3">
                         <div className="relative h-[250px] w-[300px] bg-gray-300 my-5">
-                            <Image src={`https://picsum.photos/600/400?random=${Math.floor(Math.random() * 10) + 1}`} alt="Sample"
-                                fill
-                                className="absolute inset-0 object-cover" />
                         </div>
 
                     </div>

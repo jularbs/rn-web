@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import styles from "./ContentComponent.module.css";
 import Script from "next/script";
 import { splitContentExcludingEmbeds } from "@/lib/utils";
@@ -29,10 +29,10 @@ const ContentComponent = ({
   className?: string;
 }) => {
 
-  const body = splitContentExcludingEmbeds(content);
+  const body = useMemo(() => splitContentExcludingEmbeds(content), [content]);
 
   useEffect(() => {
-    if (typeof body !== 'undefined') {
+    if (typeof body !== "undefined") {
       window.twttr?.widgets.load();
       window.instgrm?.Embeds.process();
     }
@@ -47,7 +47,7 @@ const ContentComponent = ({
       <div
         className={`${className} ${styles.container}`}
       >
-        {body.filter(item => item !== "")
+        {body.filter(item => item.trim() !== "")
           .map((paragraph, i) => {
             if (i % 5 === 0 && i !== 0) {
               return (
