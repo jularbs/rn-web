@@ -8,11 +8,13 @@ import TwitterShareComponent from "@/components/TwitterShareComponent";
 import { cn, getImageSource } from "@/lib/utils";
 import { format } from "date-fns";
 import Image from "next/image";
-import { Share2Icon } from "lucide-react";
+import { ArrowLeftIcon, Share2Icon } from "lucide-react";
 import { IPost } from "@/types/post";
 import { useInView } from "react-intersection-observer";
+import { useRouter } from "next/navigation";
 
 export default function ViewPostComponent({ postData }: { postData: IPost }): React.JSX.Element {
+    const router = useRouter();
     const { ref, inView } = useInView({ threshold: 1 });
 
     const showTags = () => {
@@ -25,11 +27,15 @@ export default function ViewPostComponent({ postData }: { postData: IPost }): Re
     }
 
     return <>
-        <div className={cn("flex opacity-0 items-center gap-4 h-[60px] py-1 px-3 border-b-3 border-radyonatin-blue bg-white",
+        <div className={cn("flex opacity-0 items-center gap-2 h-[60px] py-1 px-3 border-b-3 border-radyonatin-blue bg-white",
             "z-40 sticky top-logo-container-height",
             "md:p-1 md:gap-2 md:h-[80px] md:top-searchbar-container-height",
             "opacity-0 transition-opacity duration-300", !inView ? "opacity-100" : ""
         )}>
+            <div className="px-2 md:hidden"
+                onClick={() => router.back()}>
+                <ArrowLeftIcon className="size-6 md:size-8" />
+            </div>
             <div className="relative aspect-3/2 h-full bg-gray-200 rounded-sm overflow-hidden shrink-0 hidden md:block">
                 <Image src={getImageSource(postData.thumbnailImage)} alt="sample" fill
                     className="absolute inset-0 object-cover" />
