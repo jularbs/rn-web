@@ -16,7 +16,7 @@ export default function Jocks() {
                         <Image
                             src="/logo-lg.png"
                             alt="Logo"
-                            className="relative w-3xs mx-auto"
+                            className="relative w-1/3 mx-auto"
                             width={250}
                             height={250}
                             quality={100}
