@@ -27,6 +27,7 @@
 }
 
 .container iframe,
+.container blockquote,
 .container img{
   margin: 1rem auto !important;
   max-width: 100%;
