@@ -1,82 +1,35 @@
-import React, { useRef, useState, useEffect } from "react";
+import { useAudioPlayerContext } from "@/context/AudioPlayerWrapper";
 import { FaPause, FaPlay } from "react-icons/fa";
-import { FaVolumeHigh } from "react-icons/fa6";
+import { FaSpinner, FaVolumeHigh } from "react-icons/fa6";
+import { PiWarningCircleFill } from "react-icons/pi";
 
-const AudioPlayer = ({ src }: { src: string }) => {
-    const audioRef = useRef<HTMLAudioElement | null>(null);
-
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [currentTime, setCurrentTime] = useState(0);
-    const [volume, setVolume] = useState(1);
-
-    useEffect(() => {
-        const audio = audioRef.current;
-
-        const updateTime = () => {
-            if (audio) {
-                setCurrentTime(audio.currentTime);
-            }
-        };
-
-        if (audio) {
-            audio.addEventListener("timeupdate", updateTime);
-            audio.volume = volume;
-        }
-
-        return () => {
-            if (audio) {
-                audio.removeEventListener("timeupdate", updateTime);
-            }
-        };
-    }, [src, volume]);
-
-    const togglePlay = () => {
-        const audio = audioRef.current;
-        if (audio) {
-            if (isPlaying) {
-                audio.pause();
-            } else {
-                audio.play();
-            }
-            setIsPlaying(!isPlaying);
-        }
-    };
-
-    const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const audio = audioRef.current;
-        const newVolume = Number(e.target.value) / 100;
-        setVolume(newVolume);
-        if (audio) {
-            audio.volume = newVolume;
-        }
-    };
-
-    const formatTime = (time: number) => {
-        const mins = Math.floor(time / 60);
-        const secs = Math.floor(time % 60);
-        return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
-    };
+const AudioPlayer = () => {
+    const { isAudioLoading, audioError,
+        setIsAudioPlaying, isAudioPlaying,
+        audioVolume, setAudioVolume } = useAudioPlayerContext();
 
     return (
         <div className="flex items-center gap-5 bg-radyonatin-yellow rounded-full px-10 py-5 max-w-mini-radioplayer-width mx-auto">
-            <audio ref={audioRef} src={src}></audio>
-
-            <button onClick={togglePlay} className="text-radyonatin-blue text-2xl">
-                {isPlaying ?
-                    <FaPause />
-                    : <FaPlay />}
+            <button
+                onClick={() => {
+                    if (!isAudioLoading && !audioError)
+                        setIsAudioPlaying(!isAudioPlaying);
+                }}
+                className="text-radyonatin-blue p-2">
+                {isAudioLoading ? <FaSpinner size={20} className="animate-spin" /> :
+                    audioError ? <PiWarningCircleFill size={20} /> :
+                        isAudioPlaying ? <FaPause size={20} /> : <FaPlay size={20} />
+                }
             </button>
-
-            {/* TODOS: Set font to Karla */}
-            <span className="font-semibold text-sm">{formatTime(currentTime)} / --:--</span>
-
             <input
                 type="range"
                 className="accent-radyonatin-blue bg-slate-400 outline-0 h-2 appearance-none rounded-lg flex-1"
                 min="0"
                 max="100"
-                value={volume * 100}
-                onChange={handleVolumeChange}
+                defaultValue={audioVolume * 100}
+                onChange={(e) => {
+                    setAudioVolume(Number(e.target.value) / 100);
+                }}
             />
             <div className="text-radyonatin-blue text-2xl">
                 <FaVolumeHigh />
