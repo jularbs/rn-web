@@ -81,7 +81,7 @@ export function RadioPlayer({ }): React.JSX.Element {
                 <div className="hidden lg:flex bg-radyonatin-blue h-12 w-px" />
 
                 <div className="hidden lg:block px-5">
-                    <Slider defaultValue={[audioVolume]}
+                    <Slider value={[audioVolume]}
                         onValueChange={(value) => {
                             setAudioVolume(value[0])
                         }}
