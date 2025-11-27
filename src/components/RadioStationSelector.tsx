@@ -4,9 +4,12 @@ import { useAudioPlayerContext } from "@/context/AudioPlayerWrapper";
 import { useSelectedStationContext } from "@/context/StationWrapper";
 import { cn } from "@/lib/utils";
 import { IStation } from "@/types/station";
-import { SearchXIcon, ShieldAlertIcon } from "lucide-react";
-import { useState } from "react";
+import { LoaderCircleIcon, SearchXIcon } from "lucide-react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
+import { Input } from "./ui/input";
+import { IoCloudOfflineOutline } from "react-icons/io5";
+
 export function RadioStationSelector() {
     const { setSelectedStation, selectedStation } = useSelectedStationContext();
     const { setAudioSource } = useAudioPlayerContext();
@@ -14,29 +17,47 @@ export function RadioStationSelector() {
     const regions = ["luzon", "visayas", "mindanao"];
 
     const [selectedRegion, setSelectedRegion] = useState("luzon");
+    const [searchQuery, setSearchQuery] = useState("");
+    const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setDebouncedSearchQuery(searchQuery);
+        }, 700);
+
+        return () => clearTimeout(timer);
+    }, [searchQuery]);
 
     const { data, isLoading, error } = useSWR({
         url: "v1/stations", params: {
             limit: 0,
-            locationGroup: selectedRegion
+            locationGroup: selectedRegion,
+            search: debouncedSearchQuery
         }
-    }, fetcher); // TODO: Fetch stations data from API
-    const stationsData = data ? data.data : [];
+    }, fetcher);
 
-    const showSkeleton = () => {
-        return new Array(10).fill({}).map((_, index) => (
-            <div key={index} className="w-60 h-6 shrink-0 mx-5 my-1 bg-neutral-300 rounded-sm animate-pulse"></div>
-        ));
-    }
+    const stationsData = useMemo(() => data ? data.data : [], [data]);
 
-    const showError = () => {
+    const handleStationClick = useCallback((station: Partial<IStation>) => {
+        setSelectedStation(station as IStation);
+        setAudioSource(station.audioStreamURL ?? "");
+    }, [setSelectedStation, setAudioSource]);
+
+    const showLoading = useMemo(() => {
         return <div className="flex flex-col justify-center items-center my-4">
-            <ShieldAlertIcon className="size-20 text-neutral-300" />
-            <p className="text-lg font-bold">An error occured</p>
+            <LoaderCircleIcon className="size-10 text-neutral-300 animate-spin" />
+            <p>Loading stations...</p>
         </div>
-    }
+    }, []);
 
-    const showData = () => {
+    const showError = useMemo(() => {
+        return <div className="flex flex-col justify-center items-center my-4">
+            <IoCloudOfflineOutline className="size-20 text-neutral-300" />
+            <p>An error occured</p>
+        </div>
+    }, []);
+
+    const showData = useMemo(() => {
         if (stationsData.length === 0) {
             return <div className="flex flex-col justify-center items-center my-4">
                 <SearchXIcon className="size-20 text-neutral-300" />
@@ -45,16 +66,13 @@ export function RadioStationSelector() {
         }
 
         return stationsData.map((data: Partial<IStation>, index: number) => (
-            <div key={index} className={cn("hover:underline cursor-pointer p-1 px-5",
+            <div key={index} className={cn("hover:underline cursor-pointer py-3 px-4",
                 selectedStation?._id === data._id ? "text-radyonatin-blue font-bold" : "text-black font-normal"
-            )} onClick={() => {
-                setSelectedStation(data as IStation);
-                setAudioSource(data.audioStreamURL ?? "");
-            }}>
+            )} onClick={() => handleStationClick(data)}>
                 {data.name}
             </div>
         ))
-    }
+    }, [stationsData, handleStationClick, selectedStation]);
 
     return (
         <div>
@@ -72,8 +90,14 @@ export function RadioStationSelector() {
                         </div>
                     ))}
                 </div>
-                <div className="col-span-3 bg-greyspace h-96 overflow-y-scroll flex flex-col gap-4 py-4">
-                    {isLoading ? showSkeleton() : error ? showError() : showData()}
+                <div className="col-span-3 bg-greyspace h-96 overflow-y-scroll flex flex-col">
+                    <div className="p-3">
+                        <Input type="text" placeholder="Search stations..."
+                            className="bg-white"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)} />
+                    </div>
+                    {isLoading ? showLoading : error ? showError : showData}
                 </div>
             </div>
         </div>
