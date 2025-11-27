@@ -4,6 +4,11 @@ import { LatestStoriesComponent } from "@/components/LatestStoriesComponent";
 import SocialSharingButton from "@/components/SocialSharingButton";
 import TwitterShareComponent from "@/components/TwitterShareComponent";
 import VideoLiveStreaming from "@/components/VideoLiveStreaming";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Watch Live | Radyo Natin",
+};
 
 export default function watch() {
 
