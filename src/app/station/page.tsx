@@ -1,6 +1,10 @@
-"use client";
 import { DetailedRadioPlayer } from "@/components/DetailedRadioPlayer";
 import { LatestStoriesComponent } from "@/components/LatestStoriesComponent";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Listen Live | Radyo Natin",
+};
 
 export default function Station() {
 

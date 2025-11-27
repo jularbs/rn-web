@@ -1,7 +1,12 @@
 
 import JockListComponent from "@/components/JockListComponent";
 import { LatestStoriesComponent } from "@/components/LatestStoriesComponent";
+import { Metadata } from "next";
 import Image from "next/image";
+
+export const metadata: Metadata = {
+    title: "Programs | Radyo Natin",
+};
 
 export default function Jocks() {
 
