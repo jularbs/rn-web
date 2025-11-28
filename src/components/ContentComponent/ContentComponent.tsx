@@ -18,7 +18,6 @@ declare global {
         process: () => void;
       };
     };
-    tiktokEmbed?: unknown;
   }
 }
 
@@ -32,103 +31,147 @@ const ContentComponent = ({
 
   const body = useMemo(() => splitContentExcludingEmbeds(content), [content]);
 
-  const processEmbeds = useMemo(() => () => {
-    // Process Twitter embeds
-    if (window.twttr?.widgets) {
-      try {
-        window.twttr.widgets.load();
-      } catch (error) {
-        console.error('Twitter embed error:', error);
-      }
-    }
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout> | null = null;
+    if (typeof body !== "undefined") {
+      timer = setTimeout(() => {
+        try {
+          window.twttr?.widgets.load();
+        } catch {}
+        try {
+          window.instgrm?.Embeds.process();
+        } catch {}
 
-    // Process Instagram embeds - inject script for each blockquote
-    const instagramEmbeds = document.querySelectorAll('blockquote.instagram-media');
-    if (instagramEmbeds.length > 0) {
+        // TikTok: ensure embeds initialize for any blockquotes without iframes
+        try {
+          const container = document.querySelector(`.${styles.container}`);
+          const tiktokEmbeds = (container || document).querySelectorAll('blockquote.tiktok-embed');
+          tiktokEmbeds.forEach((embed) => {
+            if (!embed.querySelector('iframe')) {
+              const existing = embed.querySelector('script[src*="tiktok.com/embed.js"]');
+              if (!existing) {
+                const s = document.createElement('script');
+                s.async = true;
+                s.src = 'https://www.tiktok.com/embed.js';
+                embed.appendChild(s);
+              }
+            }
+          });
+        } catch {}
+      }, 2000);
+    }
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, [body]);
+
+  // Keep embeds eager and re-initialize if they get unloaded
+  useEffect(() => {
+    const container = document.querySelector(`.${styles.container}`);
+    if (!container) return;
+
+    const eagerize = (root: Element | Document) => {
+      const frames = (root as Element).querySelectorAll?.('iframe') || [];
+      frames.forEach((iframe) => {
+        try {
+          (iframe as HTMLIFrameElement).loading = 'eager';
+        } catch {}
+        iframe.removeAttribute('loading');
+      });
+    };
+
+    // Initial and delayed passes to override lazy behavior
+    eagerize(container);
+    const t1 = setTimeout(() => eagerize(container), 800);
+    const t2 = setTimeout(() => eagerize(container), 2500);
+
+    const reprocessTwitter = () => {
+      try { window.twttr?.widgets.load(); } catch {}
+    };
+    const reprocessTikTok = (scope?: Element | null) => {
       try {
-        instagramEmbeds.forEach((embed) => {
+        const root: Element | Document = scope || container;
+        const blocks = (root as Element).querySelectorAll?.('blockquote.tiktok-embed') || [];
+        blocks.forEach((embed) => {
           if (!embed.querySelector('iframe')) {
-            // Check if script already exists in this embed
-            const existingScript = embed.querySelector('script[src*="instagram.com/embed.js"]');
-            if (!existingScript) {
-              const script = document.createElement('script');
-              script.async = true;
-              script.src = 'https://www.instagram.com/embed.js';
-              embed.appendChild(script);
+            const existing = embed.querySelector('script[src*="tiktok.com/embed.js"]');
+            if (!existing) {
+              const s = document.createElement('script');
+              s.async = true;
+              s.src = 'https://www.tiktok.com/embed.js';
+              embed.appendChild(s);
             }
           }
         });
-      } catch (error) {
-        console.error('Instagram embed error:', error);
-      }
-    }
-
-    // Process TikTok embeds by reinitializing the script
-    const tiktokEmbeds = document.querySelectorAll('blockquote.tiktok-embed');
-    if (tiktokEmbeds.length > 0) {
+      } catch {}
+    };
+    const reprocessInstagram = (scope?: Element | null) => {
       try {
-        tiktokEmbeds.forEach((embed) => {
-          if (!embed.querySelector('iframe')) {
-            const script = document.createElement('script');
-            script.async = true;
-            script.src = 'https://www.tiktok.com/embed.js';
-            embed.appendChild(script);
+        const root: Element | Document = scope || container;
+        const blocks = (root as Element).querySelectorAll?.('blockquote.instagram-media') || [];
+        if (blocks.length > 0) {
+          blocks.forEach((embed) => {
+            if (!embed.querySelector('iframe')) {
+              const existing = embed.querySelector('script[src*="instagram.com/embed.js"]');
+              if (!existing) {
+                const s = document.createElement('script');
+                s.async = true;
+                s.src = 'https://www.instagram.com/embed.js';
+                embed.appendChild(s);
+              }
+            }
+          });
+          // Also trigger global processing to initialize embeds present
+          window.instgrm?.Embeds.process();
+        }
+      } catch {}
+    };
+
+    const observer = new MutationObserver((mutations) => {
+      for (const m of mutations) {
+        if (m.type === 'attributes' && m.target instanceof HTMLIFrameElement && m.attributeName === 'loading') {
+          if (m.target.getAttribute('loading') === 'lazy') {
+            try { m.target.loading = 'eager'; } catch {}
+            m.target.removeAttribute('loading');
+          }
+        }
+        m.addedNodes.forEach((node) => {
+          if (node instanceof HTMLElement) {
+            eagerize(node);
+            // Reprocess Instagram/TikTok if related nodes are added
+            if (node.matches?.('blockquote.instagram-media, .instagram-media')) {
+              reprocessInstagram(node);
+            } else if (node.matches?.('blockquote.tiktok-embed, .tiktok-embed')) {
+              reprocessTikTok(node);
+            }
           }
         });
-      } catch (error) {
-        console.error('TikTok embed error:', error);
+        m.removedNodes.forEach((node) => {
+          if (node instanceof HTMLElement && node.tagName === 'IFRAME') {
+            // If a platform unloads the iframe, force re-init
+            reprocessTwitter();
+            reprocessTikTok(node.parentElement);
+            reprocessInstagram(node.parentElement);
+          }
+        });
       }
-    }
-  }, []);
+    });
 
-  useEffect(() => {
-    // Initial processing after short delay
-    const timer = setTimeout(() => {
-      processEmbeds();
-    }, 500);
+    observer.observe(container, { childList: true, subtree: true, attributes: true, attributeFilter: ['loading'] });
 
-    return () => clearTimeout(timer);
-  }, [body, processEmbeds]);
-
-  // Retry processing embeds after a longer delay to catch late-loading scripts
-  useEffect(() => {
-    const retryTimer = setTimeout(() => {
-      processEmbeds();
-    }, 2000);
-
-    return () => clearTimeout(retryTimer);
-  }, [body, processEmbeds]);
-
-  // Additional retry for very slow connections
-  useEffect(() => {
-    const finalRetryTimer = setTimeout(() => {
-      processEmbeds();
-    }, 5000);
-
-    return () => clearTimeout(finalRetryTimer);
-  }, [body, processEmbeds]);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      observer.disconnect();
+    };
+  }, [body]);
 
   return (
     <>
-      <Script 
-        src="https://www.tiktok.com/embed.js" 
-        strategy="lazyOnload"
-        onLoad={() => processEmbeds()}
-      />
-      <Script 
-        src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2" 
-        strategy="lazyOnload"
-      />
-      <Script 
-        src="https://www.instagram.com/embed.js" 
-        strategy="lazyOnload"
-        onLoad={() => processEmbeds()}
-      />
-      <Script 
-        src="https://platform.twitter.com/widgets.js" 
-        strategy="lazyOnload"
-        onLoad={() => processEmbeds()}
-      />
+      <Script src="https://www.tiktok.com/embed.js" async />
+      <Script src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2" async />
+      <Script src="https://www.instagram.com/embed.js" async />
+      <Script src="https://platform.twitter.com/widgets.js" async />
       <div
         className={`${className} ${styles.container}`}
       >
