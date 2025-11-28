@@ -31,42 +31,63 @@ const ContentComponent = ({
 
   const body = useMemo(() => splitContentExcludingEmbeds(content), [content]);
 
+  // Detect which embeds exist to avoid loading unnecessary scripts
+  const hasInstagram = useMemo(
+    () => /<blockquote[^>]*class=\"[^\"]*instagram-media[^\"]*\"/i.test(content),
+    [content]
+  );
+  const hasTwitter = useMemo(
+    () => /<blockquote[^>]*class=\"[^\"]*twitter-tweet[^\"]*\"/i.test(content),
+    [content]
+  );
+  const hasTikTok = useMemo(
+    () => /<blockquote[^>]*class=\"[^\"]*tiktok-embed[^\"]*\"/i.test(content),
+    [content]
+  );
+  const hasFacebookXFBML = useMemo(
+    () => /<div[^>]*class=\"[^\"]*fb\-(post|video|comments)[^\"]*\"/i.test(content),
+    [content]
+  );
+
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout> | null = null;
     if (typeof body !== "undefined") {
       timer = setTimeout(() => {
-        try {
-          window.twttr?.widgets.load();
-        } catch {}
-        try {
-          window.instgrm?.Embeds.process();
-        } catch {}
+        if (hasTwitter) {
+          try { window.twttr?.widgets.load(); } catch {}
+        }
+        if (hasInstagram) {
+          try { window.instgrm?.Embeds.process(); } catch {}
+        }
 
         // TikTok: ensure embeds initialize for any blockquotes without iframes
-        try {
-          const container = document.querySelector(`.${styles.container}`);
-          const tiktokEmbeds = (container || document).querySelectorAll('blockquote.tiktok-embed');
-          tiktokEmbeds.forEach((embed) => {
-            if (!embed.querySelector('iframe')) {
-              const existing = embed.querySelector('script[src*="tiktok.com/embed.js"]');
-              if (!existing) {
-                const s = document.createElement('script');
-                s.async = true;
-                s.src = 'https://www.tiktok.com/embed.js';
-                embed.appendChild(s);
+        if (hasTikTok) {
+          try {
+            const container = document.querySelector(`.${styles.container}`);
+            const tiktokEmbeds = (container || document).querySelectorAll('blockquote.tiktok-embed');
+            tiktokEmbeds.forEach((embed) => {
+              if (!embed.querySelector('iframe')) {
+                const existing = embed.querySelector('script[src*="tiktok.com/embed.js"]');
+                if (!existing) {
+                  const s = document.createElement('script');
+                  s.async = true;
+                  s.src = 'https://www.tiktok.com/embed.js';
+                  embed.appendChild(s);
+                }
               }
-            }
-          });
-        } catch {}
+            });
+          } catch {}
+        }
       }, 2000);
     }
     return () => {
       if (timer) clearTimeout(timer);
     };
-  }, [body]);
+  }, [body, hasTwitter, hasInstagram, hasTikTok]);
 
   // Keep embeds eager and re-initialize efficiently if they get unloaded
   useEffect(() => {
+    if (!hasTwitter && !hasInstagram && !hasTikTok) return;
     const container = document.querySelector(`.${styles.container}`);
     if (!container) return;
 
@@ -155,13 +176,13 @@ const ContentComponent = ({
           if (node instanceof HTMLElement) {
             eagerize(node);
             // Schedule reprocessing when related nodes are added
-            if (node.matches?.('blockquote.instagram-media, .instagram-media') || node.querySelector?.('blockquote.instagram-media')) {
+            if (hasInstagram && (node.matches?.('blockquote.instagram-media, .instagram-media') || node.querySelector?.('blockquote.instagram-media'))) {
               scheduleInstagram();
             }
-            if (node.matches?.('blockquote.tiktok-embed, .tiktok-embed') || node.querySelector?.('blockquote.tiktok-embed')) {
+            if (hasTikTok && (node.matches?.('blockquote.tiktok-embed, .tiktok-embed') || node.querySelector?.('blockquote.tiktok-embed'))) {
               scheduleTikTok();
             }
-            if (node.querySelector?.('blockquote.twitter-tweet, .twitter-tweet')) {
+            if (hasTwitter && node.querySelector?.('blockquote.twitter-tweet, .twitter-tweet')) {
               scheduleTwitter();
             }
           }
@@ -169,9 +190,9 @@ const ContentComponent = ({
         m.removedNodes.forEach((node) => {
           if (node instanceof HTMLElement && node.tagName === 'IFRAME') {
             // If a platform unloads the iframe, force re-init
-            scheduleTwitter();
-            scheduleTikTok();
-            scheduleInstagram();
+            if (hasTwitter) scheduleTwitter();
+            if (hasTikTok) scheduleTikTok();
+            if (hasInstagram) scheduleInstagram();
           }
         });
       }
@@ -180,16 +201,16 @@ const ContentComponent = ({
     observer.observe(container, { childList: true, subtree: true, attributes: true, attributeFilter: ['loading'] });
 
     // Kick a debounced pass after initial eagerization
-    scheduleTwitter();
-    scheduleTikTok();
-    scheduleInstagram();
+    if (hasTwitter) scheduleTwitter();
+    if (hasTikTok) scheduleTikTok();
+    if (hasInstagram) scheduleInstagram();
 
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
       observer.disconnect();
     };
-  }, [body]);
+  }, [body, hasTwitter, hasInstagram, hasTikTok]);
 
   const showBody = () => {
     let paragraphCount = 0;
@@ -228,10 +249,18 @@ const ContentComponent = ({
   
   return (
     <>
-      <Script src="https://www.tiktok.com/embed.js" async />
-      <Script src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2" async />
-      <Script src="https://www.instagram.com/embed.js" async />
-      <Script src="https://platform.twitter.com/widgets.js" async />
+      {hasTikTok && (
+        <Script src="https://www.tiktok.com/embed.js" async />
+      )}
+      {hasFacebookXFBML && (
+        <Script src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2" async />
+      )}
+      {hasInstagram && (
+        <Script src="https://www.instagram.com/embed.js" async />
+      )}
+      {hasTwitter && (
+        <Script src="https://platform.twitter.com/widgets.js" async />
+      )}
       <div className={`${className} ${styles.container}`}>
         {showBody()}
       </div>
