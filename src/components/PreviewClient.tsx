@@ -47,14 +47,12 @@ export default function PreviewClient({ slug }: { slug: string }) {
     const nonce = searchParams.get("nonce") || "";
 
     useEffect(() => {
-        const manageOrigin = process.env.NEXT_PUBLIC_MANAGE_DOMAIN || "*";
         // Notify opener we're ready to receive preview payload
         try {
-            window.opener?.postMessage({ type: "RN_PREVIEW_READY", slug, nonce }, manageOrigin);
+            window.opener?.postMessage({ type: "RN_PREVIEW_READY", slug, nonce }, '*');
         } catch { }
 
         const handler = (e: MessageEvent) => {
-            if (process.env.NEXT_PUBLIC_MANAGE_DOMAIN && e.origin !== process.env.NEXT_PUBLIC_MANAGE_DOMAIN) return;
             if (!e.data || typeof e.data !== "object") return;
             if (!("nonce" in e.data) || e.data.nonce !== nonce) return;
             if (e.data.type === "RN_PREVIEW_POST" && e.data.payload) {
@@ -62,7 +60,7 @@ export default function PreviewClient({ slug }: { slug: string }) {
                 if (sanitized) {
                     setPostData(sanitized);
                     setReceived(true);
-                    try { window.opener?.postMessage({ type: "RN_PREVIEW_RECEIVED", slug, nonce }, manageOrigin); } catch { }
+                    try { window.opener?.postMessage({ type: "RN_PREVIEW_RECEIVED", slug, nonce }, '*'); } catch { }
                 }
             }
             if (e.data.type === "RN_PREVIEW_ABORT") {
@@ -81,7 +79,7 @@ export default function PreviewClient({ slug }: { slug: string }) {
                 clearInterval(pingInterval);
                 return;
             }
-            try { window.opener?.postMessage({ type: "RN_PREVIEW_REQUEST", slug, nonce }, manageOrigin); } catch { }
+            try { window.opener?.postMessage({ type: "RN_PREVIEW_REQUEST", slug, nonce }, '*'); } catch { }
         }, 2000);
 
         return () => {
