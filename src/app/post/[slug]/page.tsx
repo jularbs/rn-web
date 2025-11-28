@@ -2,14 +2,23 @@ import { getImageSource } from "@/lib/utils";
 import { Metadata } from "next";
 import ViewPostComponent from "@/components/ViewPostComponent";
 import { ShieldAlertIcon } from "lucide-react";
+import PreviewClient from "@/components/PreviewClient";
+import { IPost } from "@/types/post";
 
 export async function generateMetadata({
     params,
+    searchParams,
 }: {
-    params: Promise<{ slug: string }>
+    params: Promise<{ slug: string }>,
+    searchParams: Promise<Record<string, string | undefined>>
 }): Promise<Metadata> {
     const { slug } = await params;
-    const postData = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/v1/posts/${slug}`).then(res => res.json());
+    const sp = await searchParams;
+    // In preview mode, skip metadata generation entirely
+    if (sp?.preview === "1") {
+        return {};
+    }
+    const postData: IPost = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/v1/posts/${slug}`).then(res => res.json());
 
     // Prepare image URLs
     const featuredImageUrl = postData.featuredImage ? getImageSource(postData.featuredImage) : null;
@@ -46,9 +55,9 @@ export async function generateMetadata({
             url: postData.ogUrl || postData.canonicalUrl || `${process.env.NEXT_PUBLIC_WEB_DOMAIN}/post/${postData.slug}`,
             siteName: postData.ogSiteName || process.env.NEXT_PUBLIC_SITE_NAME,
             locale: postData.ogLocale || 'en_US',
-            type: postData.ogType || 'article',
-            publishedTime: postData.publishedAt,
-            modifiedTime: postData.updatedAt,
+            type: (postData.ogType as "article" | "website" | "book" | "profile" | "music.song" | "music.album" | "music.playlist" | "music.radio_station" | "video.movie" | "video.episode" | "video.tv_show" | "video.other") || 'article',
+            publishedTime: postData.publishedAt?.toString(),
+            modifiedTime: postData.updatedAt?.toString(),
             authors: postData.seoAuthor ? [postData.seoAuthor] : undefined,
             images: ogImageUrl ? [{
                 url: ogImageUrl,
@@ -61,7 +70,7 @@ export async function generateMetadata({
             }] : undefined,
         },
         twitter: {
-            card: postData.twitterCard || 'summary_large_image',
+            card: (postData.twitterCard as "summary_large_image" | "summary" | "player" | "app") || 'summary_large_image',
             title: postData.twitterTitle || postData.metaTitle || postData.title,
             description: postData.twitterDescription || postData.metaDescription || postData.excerpt || postData.title,
             site: postData.twitterSite,
@@ -72,20 +81,28 @@ export async function generateMetadata({
             }] : undefined,
         },
         other: {
-            'article:published_time': postData.publishedAt,
-            'article:modified_time': postData.updatedAt,
-            'reading_time': postData.readingTime,
+            'article:published_time': postData.publishedAt ? postData.publishedAt.toString() : "",
+            'article:modified_time': postData.updatedAt ? postData.updatedAt.toString() : "",
+            'reading_time': postData.readingTime || "",
         },
     };
 }
 
 export default async function Post({
     params,
+    searchParams,
 }: {
-    params: Promise<{ slug: string }>
+    params: Promise<{ slug: string }>,
+    searchParams: Promise<Record<string, string | undefined>>
 }) {
     try {
         const { slug } = await params
+        const sp = await searchParams;
+
+        if (sp?.preview === "1") {
+            return <PreviewClient slug={slug} />;
+        }
+
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/v1/posts/${slug}`)
 
         if (!res.ok) {
