@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import ViewPostComponent from "@/components/ViewPostComponent";
 import { IPost } from "@/types/post";
 
@@ -42,21 +43,26 @@ export default function PreviewClient({ slug }: { slug: string }) {
     const [postData, setPostData] = useState<IPost | null>(null);
     const [received, setReceived] = useState(false);
     const [requestAttempts, setRequestAttempts] = useState(0);
+    const searchParams = useSearchParams();
+    const nonce = searchParams.get("nonce") || "";
 
     useEffect(() => {
+        const manageOrigin = process.env.NEXT_PUBLIC_MANAGE_DOMAIN || "*";
         // Notify opener we're ready to receive preview payload
         try {
-            window.opener?.postMessage({ type: "RN_PREVIEW_READY", slug }, "*");
+            window.opener?.postMessage({ type: "RN_PREVIEW_READY", slug, nonce }, manageOrigin);
         } catch { }
 
         const handler = (e: MessageEvent) => {
+            if (process.env.NEXT_PUBLIC_MANAGE_DOMAIN && e.origin !== process.env.NEXT_PUBLIC_MANAGE_DOMAIN) return;
             if (!e.data || typeof e.data !== "object") return;
+            if (!("nonce" in e.data) || e.data.nonce !== nonce) return;
             if (e.data.type === "RN_PREVIEW_POST" && e.data.payload) {
                 const sanitized = sanitizePreviewPost(e.data.payload);
                 if (sanitized) {
                     setPostData(sanitized);
                     setReceived(true);
-                    try { window.opener?.postMessage({ type: "RN_PREVIEW_RECEIVED", slug }, "*"); } catch { }
+                    try { window.opener?.postMessage({ type: "RN_PREVIEW_RECEIVED", slug, nonce }, manageOrigin); } catch { }
                 }
             }
             if (e.data.type === "RN_PREVIEW_ABORT") {
@@ -75,14 +81,14 @@ export default function PreviewClient({ slug }: { slug: string }) {
                 clearInterval(pingInterval);
                 return;
             }
-            try { window.opener?.postMessage({ type: "RN_PREVIEW_REQUEST", slug }, "*"); } catch { }
+            try { window.opener?.postMessage({ type: "RN_PREVIEW_REQUEST", slug, nonce }, manageOrigin); } catch { }
         }, 2000);
 
         return () => {
             window.removeEventListener("message", handler);
             clearInterval(pingInterval);
         };
-    }, [slug, received, postData, requestAttempts]);
+    }, [slug, received, postData, requestAttempts, nonce]);
 
     if (!received || !postData) {
         return (
