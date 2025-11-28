@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import styles from "./ContentComponent.module.css";
 import Script from "next/script";
 import { splitContentExcludingEmbeds } from "@/lib/utils";
@@ -30,6 +30,9 @@ const ContentComponent = ({
 }) => {
 
   const body = useMemo(() => splitContentExcludingEmbeds(content), [content]);
+
+  // Scope DOM operations to this component's main container
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   // Detect which embeds exist to avoid loading unnecessary scripts
   const hasInstagram = useMemo(
@@ -63,8 +66,8 @@ const ContentComponent = ({
         // TikTok: ensure embeds initialize for any blockquotes without iframes
         if (hasTikTok) {
           try {
-            const container = document.querySelector(`.${styles.container}`);
-            const tiktokEmbeds = (container || document).querySelectorAll('blockquote.tiktok-embed');
+            const root = (containerRef.current || document);
+            const tiktokEmbeds = root.querySelectorAll('blockquote.tiktok-embed');
             tiktokEmbeds.forEach((embed) => {
               if (!embed.querySelector('iframe')) {
                 const existing = embed.querySelector('script[src*="tiktok.com/embed.js"]');
@@ -88,7 +91,7 @@ const ContentComponent = ({
   // Keep embeds eager and re-initialize efficiently if they get unloaded
   useEffect(() => {
     if (!hasTwitter && !hasInstagram && !hasTikTok) return;
-    const container = document.querySelector(`.${styles.container}`);
+    const container = containerRef.current;
     if (!container) return;
 
     const eagerize = (root: Element | Document) => {
@@ -261,7 +264,7 @@ const ContentComponent = ({
       {hasTwitter && (
         <Script src="https://platform.twitter.com/widgets.js" async />
       )}
-      <div className={`${className} ${styles.container}`}>
+      <div ref={containerRef} className={`${className} ${styles.container}`}>
         {showBody()}
       </div>
     </>
