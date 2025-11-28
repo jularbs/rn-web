@@ -2,32 +2,8 @@ import { getImageSource } from "@/lib/utils";
 import { Metadata } from "next";
 import ViewPostComponent from "@/components/ViewPostComponent";
 import { ShieldAlertIcon } from "lucide-react";
+import PreviewClient from "@/components/PreviewClient";
 import { IPost } from "@/types/post";
-
-// Remove any binary-like fields from preview payload and keep only URL strings
-function sanitizePreviewPost(post: unknown): IPost {
-    try {
-        const clone: Record<string, unknown> = { ...(post as Record<string, unknown>) };
-        const keys = ["featuredImage", "ogImage", "twitterImage"] as const;
-        for (const k of keys) {
-            const val = clone[k];
-            const isString = typeof val === "string";
-            // Allow only strings (URLs or data URLs). Drop objects (e.g., File) or other types.
-            if (!isString) {
-                delete clone[k];
-                continue;
-            }
-            // Optional: trim extremely long data URLs to avoid heavy payloads (>1MB)
-            if (val.startsWith("data:") && val.length > 1_000_000) {
-                // too large; remove to avoid hydration and metadata bloat
-                delete clone[k];
-            }
-        }
-        return clone as unknown as IPost;
-    } catch {
-        return post as IPost;
-    }
-}
 
 export async function generateMetadata({
     params,
@@ -123,16 +99,8 @@ export default async function Post({
         const { slug } = await params
         const sp = await searchParams;
 
-        if (sp?.preview === "1" && sp?.data) {
-            try {
-                const json = decodeURIComponent(Buffer.from(sp.data, "base64").toString("utf-8"));
-                const postData = sanitizePreviewPost(JSON.parse(json));
-                return <><ViewPostComponent postData={postData} />
-                    <pre className="text-wrap">{JSON.stringify(postData, null, 2)}</pre>
-                </>
-            } catch {
-                // fall through to fetch on error
-            }
+        if (sp?.preview === "1") {
+            return <PreviewClient slug={slug} />;
         }
 
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/v1/posts/${slug}`)
