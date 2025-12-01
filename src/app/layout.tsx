@@ -6,7 +6,6 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { karla } from "./fonts";
 import { SelectedStationWrapper } from "@/context/StationWrapper";
-import { MobileBottomNav } from "@/components/navigation/MobileBottomNav";
 import { AudioPlayerWrapper } from "@/context/AudioPlayerWrapper";
 import { Suspense } from "react";
 import { Toaster } from "@/components/ui/sonner"
@@ -24,7 +23,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={karla.className}>
-      <body className={`antialiased !pointer-events-auto min-h-screen md:pb-radioplayer-height-md pb-[calc(var(--spacing-mobile-bottom-nav-height)+var(--spacing-radioplayer-height-md))]`}>
+      <body className={`antialiased !pointer-events-auto min-h-screen pb-radioplayer-height-md`}>
         <Toaster richColors={true} />
         <Suspense>
           <AudioPlayerWrapper>
@@ -48,7 +47,6 @@ export default async function RootLayout({
                   </div>
                   {children}
                   <RadioPlayer />
-                  <MobileBottomNav />
                 </div>
               </div>
             </SelectedStationWrapper>
