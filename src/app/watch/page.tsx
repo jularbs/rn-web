@@ -2,6 +2,7 @@
 import FacebookShareComponent from "@/components/FacebookShareComponent";
 import { LatestStoriesComponent } from "@/components/LatestStoriesComponent";
 import SocialSharingButton from "@/components/SocialSharingButton";
+import { StationDetailsComponent } from "@/components/StationDetailsComponent";
 import TwitterShareComponent from "@/components/TwitterShareComponent";
 import VideoLiveStreaming from "@/components/VideoLiveStreaming";
 import { Metadata } from "next";
@@ -24,6 +25,7 @@ export default function watch() {
                 </div>
             </div>
             <div className="w-full xl:w-right-sidebar-width">
+                <StationDetailsComponent />
                 <LatestStoriesComponent />
                 <div className="sticky top-5">
                     <div className="flex justify-center items-center mb-3">

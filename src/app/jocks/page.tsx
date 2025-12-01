@@ -1,6 +1,7 @@
 
 import JockListComponent from "@/components/JockListComponent";
 import { LatestStoriesComponent } from "@/components/LatestStoriesComponent";
+import { StationDetailsComponent } from "@/components/StationDetailsComponent";
 import { Metadata } from "next";
 import Image from "next/image";
 
@@ -28,10 +29,11 @@ export default function Jocks() {
                         />
                     </div>
                     <p className="text-3xl font-extrabold mt-5 mb-3 ml-5 text-grey-header">Your Friend, Your Radio</p>
-                    <JockListComponent></JockListComponent>
+                    <JockListComponent />
                 </div>
             </div>
             <div className="w-full xl:w-right-sidebar-width">
+                <StationDetailsComponent />
                 <LatestStoriesComponent />
                 <div className="sticky top-5">
                     <div className="flex justify-center items-center mb-3">

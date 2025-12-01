@@ -12,6 +12,7 @@ import { ArrowLeftIcon, Share2Icon } from "lucide-react";
 import { IPost } from "@/types/post";
 import { useInView } from "react-intersection-observer";
 import { useRouter } from "next/navigation";
+import { StationDetailsComponent } from "./StationDetailsComponent";
 
 export default function ViewPostComponent({ postData }: { postData: IPost }): React.JSX.Element {
     const router = useRouter();
@@ -67,6 +68,7 @@ export default function ViewPostComponent({ postData }: { postData: IPost }): Re
                 </div>
             </div>
             <div className="w-full xl:w-right-sidebar-width">
+                <StationDetailsComponent />
                 <LatestStoriesComponent />
                 <div className="sticky top-5">
                     <div className="flex justify-center items-center mb-3">
