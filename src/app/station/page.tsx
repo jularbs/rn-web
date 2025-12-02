@@ -1,5 +1,6 @@
 import { DetailedRadioPlayer } from "@/components/DetailedRadioPlayer";
 import { LatestStoriesComponent } from "@/components/LatestStoriesComponent";
+import { StationDetailsComponent } from "@/components/StationDetailsComponent";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -12,6 +13,7 @@ export default function Station() {
         <div className="flex flex-col xl:flex-row gap-5 p-5">
             <DetailedRadioPlayer />
             <div className="w-full xl:w-right-sidebar-width">
+                <StationDetailsComponent />
                 <LatestStoriesComponent />
                 <div className="sticky top-5">
                     <div className="flex justify-center items-center mb-3">
