@@ -1,10 +1,7 @@
 "use client";
 import { open_sans } from "@/app/fonts";
 import ContentComponent from "@/components/ContentComponent/ContentComponent";
-import FacebookShareComponent from "@/components/FacebookShareComponent";
 import { LatestStoriesComponent } from "@/components/LatestStoriesComponent";
-import SocialSharingButton from "@/components/SocialSharingButton";
-import TwitterShareComponent from "@/components/TwitterShareComponent";
 import { cn } from "@/lib/utils";
 import { StationDetailsComponent } from "./StationDetailsComponent";
 import { IOptions } from "@/types/option";
