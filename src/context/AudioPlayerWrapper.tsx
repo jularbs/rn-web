@@ -53,7 +53,6 @@ export function AudioPlayerWrapper({ children }: AudioPlayerWrapperProps) {
         }
         setAudioLoading(true);
         setAudioError(false);
-        setIsAudioPlaying(false);
     }, [audioSource]);
 
     return (

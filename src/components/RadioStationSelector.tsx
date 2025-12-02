@@ -12,7 +12,7 @@ import { IoCloudOfflineOutline } from "react-icons/io5";
 
 export function RadioStationSelector() {
     const { setSelectedStation, selectedStation } = useSelectedStationContext();
-    const { setAudioSource } = useAudioPlayerContext();
+    const { setAudioSource, setIsAudioPlaying } = useAudioPlayerContext();
 
     const regions = ["luzon", "visayas", "mindanao"];
 
@@ -41,7 +41,9 @@ export function RadioStationSelector() {
     const handleStationClick = useCallback((station: Partial<IStation>) => {
         setSelectedStation(station as IStation);
         setAudioSource(station.audioStreamURL ?? "");
-    }, [setSelectedStation, setAudioSource]);
+        if (station.audioStreamURL)
+            setIsAudioPlaying(true);
+    }, [setSelectedStation, setAudioSource, setIsAudioPlaying]);
 
     const showLoading = useMemo(() => {
         return <div className="flex flex-col justify-center items-center my-4">
