@@ -6,10 +6,37 @@ import { useSelectedStationContext } from "@/context/StationWrapper";
 import { usePathname } from "next/navigation";
 
 export function StationDetailsComponent(): React.ReactNode | null {
-    const { selectedStation } = useSelectedStationContext();
+    const { selectedStation, isLoadingData } = useSelectedStationContext();
     const pathname = usePathname();
     const isStationPage = pathname?.startsWith("/station");
     if (!isStationPage && (!selectedStation || selectedStation.default)) return null;
+
+    const showSkeleton = () => {
+        return <>
+            <div className="grid gap-3">
+                <div>
+                    <div className="w-full h-10 bg-accent animate-pulse rounded-sm" />
+                </div>
+                <div className="flex items-center gap-3">
+                    <div className="w-full">
+                        <div className="h-4 w-full bg-accent animate-pulse rounded-sm mb-4" />
+                        <div className="h-4 w-30 bg-accent animate-pulse rounded-sm" />
+                    </div>
+                </div>
+                <div className="flex items-center gap-3">
+                    <div className="h-4 w-40 bg-accent animate-pulse rounded-sm" />
+                </div>
+                <div className="flex items-center gap-3">
+                    <div className="h-4 w-30 bg-accent animate-pulse rounded-sm" />
+                </div>
+            </div>
+            <div className="h-[300px] w-full mt-7 bg-accent animate-pulse" />
+            <hr className="border-t border-gray-300 my-5" />
+        </>
+    }
+
+    if (isLoadingData) return showSkeleton();
+
     return (
         <>
             <div className="grid gap-3">
