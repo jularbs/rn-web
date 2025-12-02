@@ -12,6 +12,7 @@ import { useSelectedStationContext } from "@/context/StationWrapper";
 import Link from "next/link";
 import { LinkWithStationQuery } from "../LinkWithStationQuery";
 import { Button } from "../ui/button";
+import { ABOUT_US_SLUG, ADVERTISE_WITH_US_SLUG, PRIVACY_POLICY_SLUG, TERMS_OF_USE_SLUG } from "@/constants";
 
 export function Sidebar({ }): React.JSX.Element {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -170,11 +171,21 @@ export function Sidebar({ }): React.JSX.Element {
                 <hr className="border-t border-gray-300 mx-10" />
                 <div className="my-5 px-10">
                     <ul>
-                        <li className="py-2 font-semibold">About Us</li>
-                        <li className="py-2 font-semibold">Contact Us</li>
-                        <li className="py-2 font-semibold">Privacy Policy</li>
-                        <li className="py-2 font-semibold">Terms of Use</li>
-                        <li className="py-2 font-semibold">Advertise With Us</li>
+                        <Link href={`/page/${ABOUT_US_SLUG}`}>
+                            <li className="py-2 font-semibold">About Us</li>
+                        </Link>
+                        <Link href={`/page/contact-us`}>
+                            <li className="py-2 font-semibold">Contact Us</li>
+                        </Link>
+                        <Link href={`/page/${PRIVACY_POLICY_SLUG}`}>
+                            <li className="py-2 font-semibold">Privacy Policy</li>
+                        </Link>
+                        <Link href={`/page/${TERMS_OF_USE_SLUG}`}>
+                            <li className="py-2 font-semibold">Terms of Use</li>
+                        </Link>
+                        <Link href={`/page/${ADVERTISE_WITH_US_SLUG}`}>
+                            <li className="py-2 font-semibold">Advertise With Us</li>
+                        </Link>
                     </ul>
                 </div>
                 <hr className="border-t border-gray-300 mx-10" />
