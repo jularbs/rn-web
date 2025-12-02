@@ -44,13 +44,17 @@ export default function RadioPlayerStationSelector({ open, onOpenChange }:
     const stationList = useMemo(() => data?.data ?? [], [data]);
 
     const { setSelectedStation } = useSelectedStationContext();
-    const { setAudioSource } = useAudioPlayerContext();
+    const { setAudioSource, setIsAudioPlaying } = useAudioPlayerContext();
 
     const handleStationClick = useCallback((station: Partial<IStation>) => {
         setSelectedStation(station as IStation);
         setAudioSource(station.audioStreamURL ?? "");
+        if (station.audioStreamURL)
+            setIsAudioPlaying(true);
         onOpenChange(false);
-    }, [setSelectedStation, setAudioSource, onOpenChange]);
+
+
+    }, [setSelectedStation, setAudioSource, onOpenChange, setIsAudioPlaying]);
 
     const showError = useMemo(() => (
         <li className="mt-4 text-center text-lg text-red-600">
@@ -86,7 +90,7 @@ export default function RadioPlayerStationSelector({ open, onOpenChange }:
             </li>
         ));
     }, [stationList, handleStationClick]);
-    
+
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="max-h-[95vh] overflow-y-auto top-10 translate-y-0">
