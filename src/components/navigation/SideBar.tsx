@@ -80,33 +80,41 @@ export function Sidebar({ }): React.JSX.Element {
                                 </Button>
                             </li>
                         )}
-                        <LinkWithStationQuery href="/" onClick={() => setIsMenuOpen(false)} aria-label="Go to homepage">
-                            <li className="flex gap-2 items-center py-3 uppercase font-semibold text-grey-header">
-                                <FaHome size={24} />
-                                <span>Home</span>
-                            </li>
-                        </LinkWithStationQuery>
-                        <LinkWithStationQuery href={"/station"}
-                            onClick={() => setIsMenuOpen(false)}
-                            aria-label="Go to Listen Live page"
-                        >
-                            <li className="flex gap-2 items-center py-3 uppercase font-semibold text-grey-header">
-                                <MdRadio size={24} />
-                                <span>Listen Live</span>
-                            </li>
-                        </LinkWithStationQuery>
-                        <LinkWithStationQuery href="/watch" onClick={() => setIsMenuOpen(false)} aria-label="Go to Watch Live page">
-                            <li className="flex gap-2 items-center py-3 uppercase font-semibold text-grey-header">
-                                <FaPlay size={22} />
-                                <span>Watch Live</span>
-                            </li>
-                        </LinkWithStationQuery>
-                        <LinkWithStationQuery href="/jocks" onClick={() => setIsMenuOpen(false)} aria-label="Go to Programs page">
-                            <li className="flex gap-2 items-center py-3 uppercase font-semibold text-grey-header">
-                                <FaMusic size={22} />
-                                <span>Programs</span>
-                            </li>
-                        </LinkWithStationQuery>
+                        <li>
+                            <LinkWithStationQuery href="/" onClick={() => setIsMenuOpen(false)} aria-label="Go to homepage">
+                                <div className="flex gap-2 items-center py-3 uppercase font-semibold text-grey-header">
+                                    <FaHome size={24} />
+                                    <span>Home</span>
+                                </div>
+                            </LinkWithStationQuery>
+                        </li>
+                        <li>
+                            <LinkWithStationQuery href={"/station"}
+                                onClick={() => setIsMenuOpen(false)}
+                                aria-label="Go to Listen Live page"
+                            >
+                                <div className="flex gap-2 items-center py-3 uppercase font-semibold text-grey-header">
+                                    <MdRadio size={24} />
+                                    <span>Listen Live</span>
+                                </div>
+                            </LinkWithStationQuery>
+                        </li>
+                        <li>
+                            <LinkWithStationQuery href="/watch" onClick={() => setIsMenuOpen(false)} aria-label="Go to Watch Live page">
+                                <div className="flex gap-2 items-center py-3 uppercase font-semibold text-grey-header">
+                                    <FaPlay size={22} />
+                                    <span>Watch Live</span>
+                                </div>
+                            </LinkWithStationQuery>
+                        </li>
+                        <li>
+                            <LinkWithStationQuery href="/jocks" onClick={() => setIsMenuOpen(false)} aria-label="Go to Programs page">
+                                <div className="flex gap-2 items-center py-3 uppercase font-semibold text-grey-header">
+                                    <FaMusic size={22} />
+                                    <span>Programs</span>
+                                </div>
+                            </LinkWithStationQuery>
+                        </li>
                     </ul>
                 </div>
                 <hr className="border-t border-gray-300 mx-10" />
@@ -179,21 +187,31 @@ export function Sidebar({ }): React.JSX.Element {
                 <hr className="border-t border-gray-300 mx-10" />
                 <div className="my-5 px-10">
                     <ul>
-                        <Link href={`/page/${ABOUT_US_SLUG}`}>
-                            <li className="py-2 font-semibold" aria-label="Go to About Us page">About Us</li>
-                        </Link>
-                        <Link href={`/page/contact-us`}>
-                            <li className="py-2 font-semibold" aria-label="Go to Contact Us page">Contact Us</li>
-                        </Link>
-                        <Link href={`/page/${PRIVACY_POLICY_SLUG}`}>
-                            <li className="py-2 font-semibold" aria-label="Go to Privacy Policy page">Privacy Policy</li>
-                        </Link>
-                        <Link href={`/page/${TERMS_OF_USE_SLUG}`}>
-                            <li className="py-2 font-semibold" aria-label="Go to Terms of Use page">Terms of Use</li>
-                        </Link>
-                        <Link href={`/page/${ADVERTISE_WITH_US_SLUG}`}>
-                            <li className="py-2 font-semibold" aria-label="Go to Advertise With Us page">Advertise With Us</li>
-                        </Link>
+                        <li className="py-2 font-semibold">
+                            <Link href={`/page/${ABOUT_US_SLUG}`} aria-label="Go to About Us page">
+                                About Us
+                            </Link>
+                        </li>
+                        <li className="py-2 font-semibold">
+                            <Link href={`/page/contact-us`} aria-label="Go to Contact Us page">
+                                Contact Us
+                            </Link>
+                        </li>
+                        <li className="py-2 font-semibold">
+                            <Link href={`/page/${PRIVACY_POLICY_SLUG}`} aria-label="Go to Privacy Policy page">
+                                Privacy Policy
+                            </Link>
+                        </li>
+                        <li className="py-2 font-semibold">
+                            <Link href={`/page/${TERMS_OF_USE_SLUG}`} aria-label="Go to Terms of Use page">
+                                Terms of Use
+                            </Link>
+                        </li>
+                        <li className="py-2 font-semibold" >
+                            <Link href={`/page/${ADVERTISE_WITH_US_SLUG}`} aria-label="Go to Advertise With Us page">
+                                Advertise With Us
+                            </Link>
+                        </li>
                     </ul>
                 </div>
                 <hr className="border-t border-gray-300 mx-10" />
