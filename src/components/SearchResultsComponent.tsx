@@ -17,7 +17,7 @@ export function SearchResultsComponent() {
     const searchParams = useSearchParams();
     const [searchInput, setSearchInput] = useState("");
     const router = useRouter();
-    const [limit,] = useState(1);
+    const [limit,] = useState(10);
 
     const { ref, inView } = useInView({ threshold: .9 });
     const [isAllFetched, setIsAllFetched] = useState(false);
