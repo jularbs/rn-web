@@ -10,6 +10,7 @@ import {
     FormControl,
     FormField,
     FormItem,
+    FormLabel,
 } from "@/components/ui/form"
 import { Button } from "./ui/button";
 import { useRouter } from 'next/navigation';
@@ -50,9 +51,12 @@ export function SearchComponent() {
                                     name="searchQuery"
                                     render={({ field }) => (
                                         <FormItem className="m-0 w-full">
+                                            <FormLabel className="sr-only" id="searchField">Search</FormLabel>
                                             <FormControl>
                                                 <Input
                                                     {...field}
+                                                    aria-label="Search input"
+                                                    aria-labelledby="searchField"
                                                     placeholder="Search..."
                                                     className="bg-white shadow-none border-0 pr-8 w-full"
                                                 />

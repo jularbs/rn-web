@@ -82,6 +82,7 @@ export function RadioPlayer({ }): React.JSX.Element {
 
                 <div className="hidden lg:block px-5">
                     <Slider value={[audioVolume]}
+                        aria-label="Adjust volume"
                         onValueChange={(value) => {
                             setAudioVolume(value[0])
                         }}
