@@ -90,6 +90,7 @@ export function RadioPlayer({ }): React.JSX.Element {
                 <div className="hidden lg:flex bg-radyonatin-blue h-12 w-px" />
                 <div className="px-0 lg:px-5">
                     <button
+                        aria-label={isAudioPlaying ? "Pause audio" : "Play audio"}
                         onClick={() => {
                             if (!isAudioLoading && !audioError)
                                 setIsAudioPlaying(!isAudioPlaying);
@@ -104,6 +105,7 @@ export function RadioPlayer({ }): React.JSX.Element {
                 <div className="hidden lg:flex bg-radyonatin-blue h-12 w-px" />
                 <div className="px-2 lg:px-5">
                     <Button
+                        aria-label="Choose radio station"
                         onClick={() => { setIsStationSelectorOpen(true) }}
                         className="bg-radyonatin-blue text-white rounded-md font-bold uppercase text-xs lg:text-sm px-3 py-2 lg:px-5">
                         Choose station

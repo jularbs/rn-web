@@ -20,6 +20,7 @@ export default function Error({
             <ShieldAlertIcon className="size-20 text-neutral-300" />
             <h2 className="text-center text-xl font-extrabold">{error.message || "Something went wrong!"}</h2>
             <button
+                aria-label="Try again"
                 className="mt-4 rounded-md bg-blue-500 px-4 py-2 text-sm text-white transition-colors hover:bg-blue-400 cursor-pointer"
                 onClick={() => {
                     reset();

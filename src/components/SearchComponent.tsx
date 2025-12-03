@@ -61,8 +61,9 @@ export function SearchComponent() {
                                     )}
                                 />
                                 <Button type="submit"
+                                    aria-label="Submit search"
                                     className="absolute right-5 top-1/2 -translate-y-1/2 p-0 cursor-pointer bg-white hover:bg-white">
-                                    <Search className="w-4 h-4 text-black" />
+                                    <Search className="w-4 h-4 text-black" aria-hidden="true" />
                                 </Button>
                             </form>
                         </Form>

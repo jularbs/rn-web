@@ -85,7 +85,7 @@ export function PostsLandingPageComponent(): React.JSX.Element {
             {postsData.map((item: Partial<IPost>, index: number) => {
                 if (index === 0) {
                     return <div key={index} className="lg:col-span-2">
-                        <Link href={`/post/${item.slug}`} className="no-underline">
+                        <Link href={`/post/${item.slug}`} className="no-underline" aria-label={`Read more about ${item.title}`}>
                             <div className="group">
                                 <div className="relative aspect-3/2 w-full bg-gray-200 rounded-md overflow-hidden">
                                     <Image src={getImageSource(item.thumbnailImage)} alt="Sample"
@@ -101,7 +101,7 @@ export function PostsLandingPageComponent(): React.JSX.Element {
                     </div>
                 }
 
-                return <Link href={`/post/${item.slug}`} key={index}>
+                return <Link href={`/post/${item.slug}`} key={index} aria-label={`Read more about ${item.title}`}>
                     <div className="group">
                         <div className="aspect-3/2 w-full bg-gray-200 rounded-md relative overflow-hidden">
                             <Image src={getImageSource(item.thumbnailImage)} alt="Sample"
@@ -122,6 +122,7 @@ export function PostsLandingPageComponent(): React.JSX.Element {
         </div>
         {!error &&
             <Button
+                aria-label="Load more posts"
                 ref={ref}
                 disabled={isAllFetched}
                 className="mt-5 w-full border-2 border-radyonatin-blue bg-transparent text-radyonatin-blue rounded-md text-lg font-bold uppercase px-3 py-5 hover:bg-radyonatin-blue hover:text-white cursor-pointer">

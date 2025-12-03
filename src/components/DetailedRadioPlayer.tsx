@@ -36,6 +36,7 @@ export function DetailedRadioPlayer() {
                     {selectedStation?.socialLinks?.facebook &&
                         <li>
                             <a href={selectedStation.socialLinks.facebook}
+                                aria-label="Visit Facebook page"
                                 target="_blank"
                                 className="flex items-center justify-center w-10 h-10 rounded-full bg-radyonatin-blue text-white hover:bg-opacity-80 transition-colors">
                                 <FaFacebook className="w-5 h-5" />
@@ -45,6 +46,7 @@ export function DetailedRadioPlayer() {
                     {selectedStation?.socialLinks?.twitter &&
                         <li>
                             <a href={selectedStation.socialLinks.twitter}
+                                aria-label="Visit Twitter page"
                                 target="_blank"
                                 className="flex items-center justify-center w-10 h-10 rounded-full bg-radyonatin-blue text-white hover:bg-opacity-80 transition-colors">
                                 <FaXTwitter className="w-5 h-5" />
@@ -54,6 +56,7 @@ export function DetailedRadioPlayer() {
                     {selectedStation?.socialLinks?.instagram &&
                         <li>
                             <a href={selectedStation.socialLinks.instagram}
+                                aria-label="Visit Instagram page"
                                 target="_blank"
                                 className="flex items-center justify-center w-10 h-10 rounded-full bg-radyonatin-blue text-white hover:bg-opacity-80 transition-colors">
                                 <FaInstagram className="w-5 h-5" />
@@ -63,6 +66,7 @@ export function DetailedRadioPlayer() {
                     {selectedStation?.socialLinks?.tiktok &&
                         <li>
                             <a href={selectedStation.socialLinks.tiktok}
+                                aria-label="Visit TikTok page"
                                 target="_blank"
                                 className="flex items-center justify-center w-10 h-10 rounded-full bg-radyonatin-blue text-white hover:bg-opacity-80 transition-colors">
                                 <FaTiktok className="w-5 h-5" />
@@ -72,6 +76,7 @@ export function DetailedRadioPlayer() {
                     {selectedStation?.socialLinks?.youtube &&
                         <li>
                             <a href={selectedStation.socialLinks.youtube}
+                                aria-label="Visit YouTube channel"
                                 target="_blank"
                                 className="flex items-center justify-center w-10 h-10 rounded-full bg-radyonatin-blue text-white hover:bg-opacity-80 transition-colors">
                                 <FaYoutube className="w-5 h-5" />

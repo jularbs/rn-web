@@ -50,6 +50,7 @@ export default function JockListComponent() {
                 <p className="text-lg text-bold">No jocks Available for this station</p>
                 <div className="mt-3">
                     <Button
+                        aria-label="Return to Nationwide station"
                         onClick={() => {
                             resetSelectedStationToDefault();
                         }}
@@ -73,23 +74,23 @@ export default function JockListComponent() {
                     {item.programs && item.programs.length > 0 ? <p className="text-sm font-light">Show/s: {item.programs?.map(program => program.name).join(", ")}</p> : null}
                     <small className="text-xs font-semibold mb-2">Follow and Subscribe</small>
                     <div className="flex gap-3">
-                        {item.socialLinks?.facebook && <a href={item.socialLinks.facebook} className="flex items-center justify-center w-10 h-10 rounded-full bg-radyonatin-blue text-white hover:bg-opacity-80 transition-colors">
+                        {item.socialLinks?.facebook && <a href={item.socialLinks.facebook} aria-label="Visit Facebook page" className="flex items-center justify-center w-10 h-10 rounded-full bg-radyonatin-blue text-white hover:bg-opacity-80 transition-colors">
                             <FaFacebookF className="w-4 h-4" />
                         </a>}
 
-                        {item.socialLinks?.twitter && <a href={item.socialLinks.twitter} className="flex items-center justify-center w-10 h-10 rounded-full bg-radyonatin-blue text-white hover:bg-opacity-80 transition-colors">
+                        {item.socialLinks?.twitter && <a href={item.socialLinks.twitter} aria-label="Visit Twitter page" className="flex items-center justify-center w-10 h-10 rounded-full bg-radyonatin-blue text-white hover:bg-opacity-80 transition-colors">
                             <FaXTwitter className="w-4 h-4" />
                         </a>}
 
-                        {item.socialLinks?.instagram && <a href={item.socialLinks.instagram} className="flex items-center justify-center w-10 h-10 rounded-full bg-radyonatin-blue text-white hover:opacity-80 transition-opacity">
+                        {item.socialLinks?.instagram && <a href={item.socialLinks.instagram} aria-label="Visit Instagram page" className="flex items-center justify-center w-10 h-10 rounded-full bg-radyonatin-blue text-white hover:opacity-80 transition-opacity">
                             <FaInstagram className="w-4 h-4" />
                         </a>}
 
-                        {item.socialLinks?.tiktok && <a href={item.socialLinks.tiktok} className="flex items-center justify-center w-10 h-10 rounded-full bg-radyonatin-blue text-white hover:bg-opacity-80 transition-colors">
+                        {item.socialLinks?.tiktok && <a href={item.socialLinks.tiktok} aria-label="Visit TikTok page" className="flex items-center justify-center w-10 h-10 rounded-full bg-radyonatin-blue text-white hover:bg-opacity-80 transition-colors">
                             <FaTiktok className="w-4 h-4" />
                         </a>}
 
-                        {item.socialLinks?.youtube && <a href={item.socialLinks.youtube} className="flex items-center justify-center w-10 h-10 rounded-full bg-radyonatin-blue text-white hover:bg-opacity-80 transition-colors">
+                        {item.socialLinks?.youtube && <a href={item.socialLinks.youtube} aria-label="Visit YouTube channel" className="flex items-center justify-center w-10 h-10 rounded-full bg-radyonatin-blue text-white hover:bg-opacity-80 transition-colors">
                             <FaYoutube className="w-4 h-4" />
                         </a>}
                     </div>

@@ -56,7 +56,7 @@ export function LatestStoriesComponent({ }) {
         };
 
         return stories.map((post: IPost) => (
-            <Link href={`/post/${post.slug}`} key={post._id}>
+            <Link href={`/post/${post.slug}`} key={post._id} aria-label={`Read more about ${post.title}`}>
                 <div className={`group grid grid-cols-5 gap-2`}>
                     <div className="relative aspect-3/2 bg-gray-200 rounded-md overflow-hidden col-span-2 border border-black">
                         <Image src={getImageSource(post.featuredImage)} alt={post.title}

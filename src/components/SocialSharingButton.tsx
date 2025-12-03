@@ -121,7 +121,7 @@ const SocialSharingButton = ({ className, path, children }: { className: string,
                             setIsCopied(true);
                         }}
                     >
-                        <Button>
+                        <Button aria-label={isCopied ? "Link Copied!" : "Copy URL to Clipboard"} className="ml-2">
                             <IoCopyOutline className="mr-2" />
                             {isCopied ? "Link Copied!" : "Copy URL to Clipboard"}
                         </Button>

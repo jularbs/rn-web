@@ -42,6 +42,7 @@ export function Sidebar({ }): React.JSX.Element {
                         priority
                     ></Image>
                     <Link href="/"
+                        aria-label="Go to homepage"
                         onClick={() => setIsMenuOpen(false)}>
                         <Image
                             src="/logo.png"
@@ -68,6 +69,7 @@ export function Sidebar({ }): React.JSX.Element {
                         {selectedStation && !selectedStation.default && (
                             <li>
                                 <Button
+                                    aria-label="Return to Nationwide station"
                                     onClick={() => {
                                         resetSelectedStationToDefault();
                                         setIsMenuOpen(false);
@@ -78,7 +80,7 @@ export function Sidebar({ }): React.JSX.Element {
                                 </Button>
                             </li>
                         )}
-                        <LinkWithStationQuery href="/" onClick={() => setIsMenuOpen(false)}>
+                        <LinkWithStationQuery href="/" onClick={() => setIsMenuOpen(false)} aria-label="Go to homepage">
                             <li className="flex gap-2 items-center py-3 uppercase font-semibold text-grey-header">
                                 <FaHome size={24} />
                                 <span>Home</span>
@@ -86,19 +88,20 @@ export function Sidebar({ }): React.JSX.Element {
                         </LinkWithStationQuery>
                         <LinkWithStationQuery href={"/station"}
                             onClick={() => setIsMenuOpen(false)}
+                            aria-label="Go to Listen Live page"
                         >
                             <li className="flex gap-2 items-center py-3 uppercase font-semibold text-grey-header">
                                 <MdRadio size={24} />
                                 <span>Listen Live</span>
                             </li>
                         </LinkWithStationQuery>
-                        <LinkWithStationQuery href="/watch" onClick={() => setIsMenuOpen(false)}>
+                        <LinkWithStationQuery href="/watch" onClick={() => setIsMenuOpen(false)} aria-label="Go to Watch Live page">
                             <li className="flex gap-2 items-center py-3 uppercase font-semibold text-grey-header">
                                 <FaPlay size={22} />
                                 <span>Watch Live</span>
                             </li>
                         </LinkWithStationQuery>
-                        <LinkWithStationQuery href="/jocks" onClick={() => setIsMenuOpen(false)}>
+                        <LinkWithStationQuery href="/jocks" onClick={() => setIsMenuOpen(false)} aria-label="Go to Programs page">
                             <li className="flex gap-2 items-center py-3 uppercase font-semibold text-grey-header">
                                 <FaMusic size={22} />
                                 <span>Programs</span>
@@ -114,6 +117,7 @@ export function Sidebar({ }): React.JSX.Element {
                             {selectedStation?.socialLinks?.facebook &&
                                 <li>
                                     <a href={selectedStation.socialLinks.facebook}
+                                        aria-label={"Visit our Facebook page"}
                                         target="_blank"
                                         onClick={() => setIsMenuOpen(false)}
                                         className="flex items-center justify-center w-10 h-10 rounded-full bg-radyonatin-blue text-white hover:bg-opacity-80 transition-colors">
@@ -124,6 +128,7 @@ export function Sidebar({ }): React.JSX.Element {
                             {selectedStation?.socialLinks?.twitter &&
                                 <li>
                                     <a href={selectedStation.socialLinks.twitter}
+                                        aria-label={"Visit our Twitter page"}
                                         target="_blank"
                                         onClick={() => setIsMenuOpen(false)}
                                         className="flex items-center justify-center w-10 h-10 rounded-full bg-radyonatin-blue text-white hover:bg-opacity-80 transition-colors">
@@ -134,6 +139,7 @@ export function Sidebar({ }): React.JSX.Element {
                             {selectedStation?.socialLinks?.instagram &&
                                 <li>
                                     <a href={selectedStation.socialLinks.instagram}
+                                        aria-label={"Visit our Instagram page"}
                                         target="_blank"
                                         onClick={() => setIsMenuOpen(false)}
                                         className="flex items-center justify-center w-10 h-10 rounded-full bg-radyonatin-blue text-white hover:bg-opacity-80 transition-colors">
@@ -144,6 +150,7 @@ export function Sidebar({ }): React.JSX.Element {
                             {selectedStation?.socialLinks?.tiktok &&
                                 <li>
                                     <a href={selectedStation.socialLinks.tiktok}
+                                        aria-label={"Visit our TikTok page"}
                                         target="_blank"
                                         onClick={() => setIsMenuOpen(false)}
                                         className="flex items-center justify-center w-10 h-10 rounded-full bg-radyonatin-blue text-white hover:bg-opacity-80 transition-colors">
@@ -154,6 +161,7 @@ export function Sidebar({ }): React.JSX.Element {
                             {selectedStation?.socialLinks?.youtube &&
                                 <li>
                                     <a href={selectedStation.socialLinks.youtube}
+                                        aria-label={"Visit our YouTube channel"}
                                         target="_blank"
                                         onClick={() => setIsMenuOpen(false)}
                                         className="flex items-center justify-center w-10 h-10 rounded-full bg-radyonatin-blue text-white hover:bg-opacity-80 transition-colors">
@@ -172,19 +180,19 @@ export function Sidebar({ }): React.JSX.Element {
                 <div className="my-5 px-10">
                     <ul>
                         <Link href={`/page/${ABOUT_US_SLUG}`}>
-                            <li className="py-2 font-semibold">About Us</li>
+                            <li className="py-2 font-semibold" aria-label="Go to About Us page">About Us</li>
                         </Link>
                         <Link href={`/page/contact-us`}>
-                            <li className="py-2 font-semibold">Contact Us</li>
+                            <li className="py-2 font-semibold" aria-label="Go to Contact Us page">Contact Us</li>
                         </Link>
                         <Link href={`/page/${PRIVACY_POLICY_SLUG}`}>
-                            <li className="py-2 font-semibold">Privacy Policy</li>
+                            <li className="py-2 font-semibold" aria-label="Go to Privacy Policy page">Privacy Policy</li>
                         </Link>
                         <Link href={`/page/${TERMS_OF_USE_SLUG}`}>
-                            <li className="py-2 font-semibold">Terms of Use</li>
+                            <li className="py-2 font-semibold" aria-label="Go to Terms of Use page">Terms of Use</li>
                         </Link>
                         <Link href={`/page/${ADVERTISE_WITH_US_SLUG}`}>
-                            <li className="py-2 font-semibold">Advertise With Us</li>
+                            <li className="py-2 font-semibold" aria-label="Go to Advertise With Us page">Advertise With Us</li>
                         </Link>
                     </ul>
                 </div>
