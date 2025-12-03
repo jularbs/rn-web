@@ -5,19 +5,19 @@ import { IPost } from "@/types/post";
 import { getImageSource } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { useSearchContext } from "@/context/SearchWrapper";
 import { useInView } from "react-intersection-observer";
 import useSWRInfinite from "swr/infinite";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
 import { ConstructionIcon, LoaderCircleIcon, SearchXIcon } from "lucide-react";
 import { IoArrowBack } from "react-icons/io5";
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export function SearchResultsComponent() {
-    const { searchInput } = useSearchContext();
+    const searchParams = useSearchParams();
+    const [searchInput, setSearchInput] = useState("");
     const router = useRouter();
-    const [limit,] = useState(10);
+    const [limit,] = useState(1);
 
     const { ref, inView } = useInView({ threshold: .9 });
     const [isAllFetched, setIsAllFetched] = useState(false);
@@ -108,6 +108,15 @@ export function SearchResultsComponent() {
             });
         }
     }, [error])
+
+    useEffect(() => {
+        //check if query param exists in url
+        const params = new URLSearchParams(searchParams.toString());
+        const query = params.get("query");
+        if (query) {
+            setSearchInput(query);
+        }
+    }, [searchInput, setSearchInput, searchParams]);
 
     const showSkeletonLoadMore = () => {
         if (error) return null;

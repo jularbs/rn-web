@@ -8,7 +8,6 @@ import { AudioPlayerWrapper } from "@/context/AudioPlayerWrapper";
 import { Suspense } from "react";
 import { Toaster } from "@/components/ui/sonner"
 import { SearchComponent } from "@/components/SearchComponent";
-import { SearchWrapper } from "@/context/SearchWrapper";
 
 export const metadata: Metadata = {
   title: "Radyo Natin",
@@ -28,21 +27,19 @@ export default async function RootLayout({
         <Suspense>
           <AudioPlayerWrapper>
             <SelectedStationWrapper>
-              <SearchWrapper>
-                <div className="flex flex-col md:flex-row max-w-container-width mx-auto">
-                  <Sidebar />
-                  <div className="flex-1">
-                    <div className="hidden md:flex w-full bg-greyspace h-logo-container-height-md items-center justify-center">
-                      <div className="relative h-[90px] w-full max-w-[728px] bg-gray-300">
+              <div className="flex flex-col md:flex-row max-w-container-width mx-auto">
+                <Sidebar />
+                <div className="flex-1">
+                  <div className="hidden md:flex w-full bg-greyspace h-logo-container-height-md items-center justify-center">
+                    <div className="relative h-[90px] w-full max-w-[728px] bg-gray-300">
 
-                      </div>
                     </div>
-                    <SearchComponent />
-                    {children}
-                    <RadioPlayer />
                   </div>
+                  <SearchComponent />
+                  {children}
+                  <RadioPlayer />
                 </div>
-              </SearchWrapper>
+              </div>
             </SelectedStationWrapper>
           </AudioPlayerWrapper>
         </Suspense>

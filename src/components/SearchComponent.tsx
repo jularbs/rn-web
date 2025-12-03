@@ -12,10 +12,8 @@ import {
     FormItem,
 } from "@/components/ui/form"
 import { Button } from "./ui/button";
-import { useSearchContext } from "@/context/SearchWrapper";
 import { useRouter } from 'next/navigation';
 export function SearchComponent() {
-    const { setSearchInput } = useSearchContext();
     const router = useRouter();
 
     const formSchema = z.object({
@@ -31,13 +29,13 @@ export function SearchComponent() {
 
     const onSubmit = async (data: z.infer<typeof formSchema>) => {
         // Handle password change logic here
-        setSearchInput(data.searchQuery);
+        // setSearchInput(data.searchQuery);
 
         //clear form input field
         form.reset();
 
         //redirect to /search page using router
-        router.push("/search");
+        router.push(`/search?query=${encodeURIComponent(data.searchQuery)}`);
     }
 
     return (
