@@ -88,7 +88,7 @@ export function PostsLandingPageComponent(): React.JSX.Element {
                         <Link href={`/post/${item.slug}`} className="no-underline" aria-label={`Read more about ${item.title}`}>
                             <div className="group">
                                 <div className="relative aspect-3/2 w-full bg-gray-200 rounded-md overflow-hidden">
-                                    <Image src={getImageSource(item.thumbnailImage)} alt="Sample"
+                                    <Image src={getImageSource(item.featuredImage)} alt="Sample"
                                         fill
                                         className="absolute inset-0 object-cover group-hover:scale-110 transition-transform duration-300" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-blue-gradient-start opacity-80 mt-1/3" />
