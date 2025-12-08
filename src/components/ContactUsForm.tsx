@@ -24,20 +24,21 @@ import { Button } from "./ui/button";
 import { useEffect, useState } from "react";
 import { createMessage } from "@/actions/messages";
 import { toast } from "sonner";
+import useSWR from "swr";
+import { fetcher } from "@/actions/swr";
+import { cn } from "@/lib/utils";
 
 export default function ContactUsForm() {
     const [loading, setLoading] = useState(false);
     const { selectedStation } = useSelectedStationContext();
-    const contactReasons = [
-        "General Inquiry",
-        "Feedback",
-        "Support",
-        "Other"
-    ];
+
+    const { data, isLoading, error } = useSWR({ url: "v1/recepients" }, fetcher);
+
+    const contactReasons = data?.data?.map((recepient: { reason: string, _id: string }) => { return { reason: recepient.reason, _id: recepient._id } }) || [];
     //FORMS
     const formSchema = z.object({
         stationId: z.string(),
-        reason: z.string().min(2, { message: "Please select a reason for contacting." }),
+        reason: z.string().regex(/^[0-9a-fA-F]{24}$/, { message: "Please select a valid reason for contacting." }),
         fullName: z.string()
             .min(2, { message: "Name must be at least 2 characters." })
             .max(50, { message: "Name must be at most 50 characters." }),
@@ -103,6 +104,21 @@ export default function ContactUsForm() {
         form.setValue("stationId", selectedStation?._id || "");
     }, [selectedStation?._id, form])
 
+    useEffect(() => {
+        if (error) {
+            toast.error("Server Error", {
+                style: {
+                    background: "rgba(220, 46, 46, 1)",
+                    color: "white",
+                    border: "none"
+                },
+                description: error.message || "An error occurred while fetching contact reasons.",
+                duration: 5000,
+                position: "top-center"
+            })
+        }
+    }, [error])
+
     return (
         <div className="grow">
             <div className="grid lg:grid-cols-2 rounded-md overflow-hidden border shadow-md">
@@ -155,16 +171,18 @@ export default function ContactUsForm() {
                         name="reason"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Reason for Contacting</FormLabel>
+                                <FormLabel>Reason for Contacting
+                                    <LoaderCircle className={cn(`size-3 inline-block animate-spin`, !isLoading && "hidden")} />
+                                </FormLabel>
                                 <FormControl>
                                     <select
                                         {...field}
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-radyonatin-blue"
                                     >
                                         <option value="">Select a reason</option>
-                                        {contactReasons.map((reason) => (
-                                            <option key={reason} value={reason}>
-                                                {reason}
+                                        {contactReasons.map((reason: { reason: string, _id: string }) => (
+                                            <option key={reason._id} value={reason._id}>
+                                                {reason.reason}
                                             </option>
                                         ))}
                                     </select>
