@@ -142,7 +142,7 @@ export default function ContactUsForm() {
                 <div>
                     {selectedStation?.mapEmbedCode &&
                         <div
-                            className="iframe-container h-[250px] w-full overflow-scroll"
+                            className="iframe-container h-[300px] w-full overflow-scroll"
                             dangerouslySetInnerHTML={{ __html: selectedStation?.mapEmbedCode as string }} />
                     }
                 </div>
