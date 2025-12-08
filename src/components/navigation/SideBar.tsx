@@ -193,7 +193,7 @@ export function Sidebar({ }): React.JSX.Element {
                             </Link>
                         </li>
                         <li className="py-2 font-semibold">
-                            <Link href={`/page/contact-us`} aria-label="Go to Contact Us page">
+                            <Link href={`/contact-us`} aria-label="Go to Contact Us page">
                                 Contact Us
                             </Link>
                         </li>
