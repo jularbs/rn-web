@@ -73,7 +73,14 @@ export default function ContactUsForm() {
                 duration: 5000,
                 position: "top-center"
             })
-            form.reset();
+            form.reset({
+                stationId: selectedStation?._id || "",
+                reason: "",
+                fullName: "",
+                emailAddress: "",
+                contactNumber: "",
+                message: ""
+            });
 
         }).catch((error) => {
             console.error("Error creating message:", error);
@@ -226,7 +233,7 @@ export default function ContactUsForm() {
                                 <FormLabel>Your Message</FormLabel>
                                 <FormControl>
                                     <Textarea
-                                        className="min-h-40"
+                                        className="min-h-40 whitespace-pre-wrap"
                                         {...field}
                                         placeholder="Type your message here..."
                                     />

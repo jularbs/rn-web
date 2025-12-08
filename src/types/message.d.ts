@@ -4,6 +4,7 @@ export interface IMessage {
   reason: string;
   fullName: string;
   emailAddress: string;
+  excerpt: string;
   contactNumber: string;
   message: string;
   status: "unread" | "read" | "replied" | "archived";
