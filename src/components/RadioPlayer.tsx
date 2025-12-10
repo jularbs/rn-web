@@ -26,7 +26,7 @@ export function RadioPlayer({ }): React.JSX.Element {
 
     useEffect(() => {
         setIsTooltipOpen(true)
-    }, [selectedStation]);
+    }, [selectedStation, programData]);
 
     return (
         <>
