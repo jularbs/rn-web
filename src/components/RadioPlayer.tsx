@@ -11,8 +11,9 @@ import { fetcher } from "@/actions/swr";
 import { useAudioPlayerContext } from "@/context/AudioPlayerWrapper";
 import { PiWarningCircleFill } from "react-icons/pi";
 import RadioPlayerStationSelector from "./RadioPlayerStationSelector";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SocialSharingButton from "./SocialSharingButton";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 export function RadioPlayer({ }): React.JSX.Element {
     const { selectedStation, isLoadingData } = useSelectedStationContext();
     const { isAudioLoading, audioError,
@@ -20,6 +21,12 @@ export function RadioPlayer({ }): React.JSX.Element {
         audioVolume, setAudioVolume } = useAudioPlayerContext();
     const { data: programData, isLoading: isProgramLoading } = useSWR(selectedStation ? { url: "v1/programs/schedule/now?station=" + selectedStation._id } : null, fetcher);
     const [isStationSelectorOpen, setIsStationSelectorOpen] = useState(false);
+
+    const [isTooltipOpen, setIsTooltipOpen] = useState(false);
+
+    useEffect(() => {
+        setIsTooltipOpen(true)
+    }, [selectedStation]);
 
     return (
         <>
@@ -90,18 +97,29 @@ export function RadioPlayer({ }): React.JSX.Element {
                 </div>
                 <div className="hidden lg:flex bg-radyonatin-blue h-12 w-px" />
                 <div className="px-0 lg:px-5">
-                    <button
-                        aria-label={isAudioPlaying ? "Pause audio" : "Play audio"}
-                        onClick={() => {
-                            if (!isAudioLoading && !audioError)
-                                setIsAudioPlaying(!isAudioPlaying);
-                        }}
-                        className="text-radyonatin-blue px-2 lg:px-5 py-2">
-                        {isAudioLoading ? <FaSpinner size={20} className="animate-spin" /> :
-                            audioError ? <PiWarningCircleFill size={20} /> :
-                                isAudioPlaying ? <FaPause size={20} /> : <FaPlay size={20} />
-                        }
-                    </button>
+                    <Tooltip open={isTooltipOpen} onOpenChange={setIsTooltipOpen}>
+                        <TooltipTrigger asChild>
+                            <button
+                                aria-label={isAudioPlaying ? "Pause audio" : "Play audio"}
+                                onClick={() => {
+                                    if (!isAudioLoading && !audioError)
+                                        setIsAudioPlaying(!isAudioPlaying);
+                                }}
+                                className="text-radyonatin-blue px-2 lg:px-5 py-2 cursor-pointer">
+                                {isAudioLoading ? <FaSpinner size={20} className="animate-spin" /> :
+                                    audioError ? <PiWarningCircleFill size={20} /> :
+                                        isAudioPlaying ? <FaPause size={20} /> : <FaPlay size={20} />
+                                }
+                            </button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            {isAudioLoading ? "Loading audio..." :
+                                audioError ? "Error loading audio" :
+                                    isAudioPlaying ? "Press to pause audio" : "Press to play audio"
+                            }
+                        </TooltipContent>
+                    </Tooltip>
+
                 </div>
                 <div className="hidden lg:flex bg-radyonatin-blue h-12 w-px" />
                 <div className="px-2 lg:px-5">

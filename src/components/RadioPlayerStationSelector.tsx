@@ -44,17 +44,17 @@ export default function RadioPlayerStationSelector({ open, onOpenChange }:
     const stationList = useMemo(() => data?.data ?? [], [data]);
 
     const { setSelectedStation } = useSelectedStationContext();
-    const { setAudioSource, setIsAudioPlaying } = useAudioPlayerContext();
+    const { setAudioSource } = useAudioPlayerContext();
 
     const handleStationClick = useCallback((station: Partial<IStation>) => {
         setSelectedStation(station as IStation);
         setAudioSource(station.audioStreamURL ?? "");
-        if (station.audioStreamURL)
-            setIsAudioPlaying(true);
+        // if (station.audioStreamURL)
+        //     setIsAudioPlaying(true);
         onOpenChange(false);
 
 
-    }, [setSelectedStation, setAudioSource, onOpenChange, setIsAudioPlaying]);
+    }, [setSelectedStation, setAudioSource, onOpenChange]);
 
     const showError = useMemo(() => (
         <li className="mt-4 text-center text-lg text-red-600">
