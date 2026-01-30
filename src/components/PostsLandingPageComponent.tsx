@@ -104,7 +104,7 @@ export function PostsLandingPageComponent(): React.JSX.Element {
                 return <Link href={`/post/${item.slug}`} key={index} aria-label={`Read more about ${item.title}`}>
                     <div className="group">
                         <div className="aspect-3/2 w-full bg-gray-200 rounded-md relative overflow-hidden">
-                            <Image src={getImageSource(item.thumbnailImage)} alt="Sample"
+                            <Image src={getImageSource(item.featuredImage)} alt="Sample"
                                 fill
                                 className="absolute inset-0 object-cover group-hover:scale-110 transition-transform duration-300" />
                             <div className="absolute inset-0 bg-gradient-to-b to-blue-gradient-start from-transparent opacity-90 mt-1/5" />
@@ -131,7 +131,7 @@ export function PostsLandingPageComponent(): React.JSX.Element {
             </Button>
         }
         {error && <div className="flex flex-col items-center justify-center gap-2">
-        <ConstructionIcon className="w-20 h-20"/>
+            <ConstructionIcon className="w-20 h-20" />
             <h1 className="text-2xl font-extrabold">Oops!</h1>
             <p className="text-lg">Something went wrong! Please try again later</p>
         </div>}
