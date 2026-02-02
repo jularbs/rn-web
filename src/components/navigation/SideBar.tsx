@@ -12,7 +12,7 @@ import { useSelectedStationContext } from "@/context/StationWrapper";
 import Link from "next/link";
 import { LinkWithStationQuery } from "../LinkWithStationQuery";
 import { Button } from "../ui/button";
-import { ABOUT_US_SLUG, ADVERTISE_WITH_US_SLUG, PRIVACY_POLICY_SLUG, TERMS_OF_USE_SLUG } from "@/constants";
+import { ABOUT_US_SLUG, PRIVACY_POLICY_SLUG, TERMS_OF_USE_SLUG } from "@/constants";
 
 export function Sidebar({ }): React.JSX.Element {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
