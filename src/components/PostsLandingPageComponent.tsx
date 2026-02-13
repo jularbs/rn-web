@@ -14,7 +14,7 @@ import { format } from "date-fns";
 import { toast } from "sonner";
 import { Badge } from "./ui/badge";
 
-export function PostsLandingPageComponent(): React.JSX.Element {
+export function PostsLandingPageComponent({ category }: { category?: string }): React.JSX.Element {
 
     const [limit,] = useState(5);
     const { ref, inView } = useInView({ threshold: .9 });
@@ -32,6 +32,7 @@ export function PostsLandingPageComponent(): React.JSX.Element {
             params: {
                 page: index + 1,
                 limit: limit,
+                ...(category && { categories: category })
             },
         }
     },

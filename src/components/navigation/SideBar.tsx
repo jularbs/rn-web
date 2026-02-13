@@ -13,6 +13,7 @@ import Link from "next/link";
 import { LinkWithStationQuery } from "../LinkWithStationQuery";
 import { Button } from "../ui/button";
 import { ABOUT_US_SLUG, PRIVACY_POLICY_SLUG, TERMS_OF_USE_SLUG } from "@/constants";
+import { IoNewspaper } from "react-icons/io5";
 
 export function Sidebar({ }): React.JSX.Element {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -85,6 +86,22 @@ export function Sidebar({ }): React.JSX.Element {
                                 <div className="flex gap-2 items-center py-3 uppercase font-semibold text-grey-header">
                                     <FaHome size={24} />
                                     <span>Home</span>
+                                </div>
+                            </LinkWithStationQuery>
+                        </li>
+                        <li>
+                            <LinkWithStationQuery href="/category/news" onClick={() => setIsMenuOpen(false)} aria-label="Go to homepage">
+                                <div className="flex gap-2 items-center py-3 uppercase font-semibold text-grey-header">
+                                    <IoNewspaper size={24} />
+                                    <span>News</span>
+                                </div>
+                            </LinkWithStationQuery>
+                        </li>
+                        <li>
+                            <LinkWithStationQuery href="/category/lifestyle" onClick={() => setIsMenuOpen(false)} aria-label="Go to homepage">
+                                <div className="flex gap-2 items-center py-3 uppercase font-semibold text-grey-header">
+                                    <IoNewspaper size={24} />
+                                    <span>Lifestyle </span>
                                 </div>
                             </LinkWithStationQuery>
                         </li>
