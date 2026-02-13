@@ -13,6 +13,7 @@ import { IPost } from "@/types/post";
 import { useInView } from "react-intersection-observer";
 import { useRouter } from "next/navigation";
 import { StationDetailsComponent } from "./StationDetailsComponent";
+import { Badge } from "./ui/badge";
 
 export default function ViewPostComponent({ postData }: { postData: IPost }): React.JSX.Element {
     const router = useRouter();
@@ -53,6 +54,9 @@ export default function ViewPostComponent({ postData }: { postData: IPost }): Re
                         <Image src={getImageSource(postData.featuredImage)} alt="sample" fill
                             className="absolute inset-0 object-cover" />
                         <div className="absolute inset-0 bg-gradient-to-t from-blue-gradient-start opacity-80 mt-1/3" />
+                        <div className="absolute top-0 right-0 text-white p-3">
+                            {postData.isFeatured && <Badge className="px-3 font-bold bg-radyonatin-blue">Featured</Badge>}
+                        </div>
                     </div>
                     <small className="p-1 text-neutral-500">{postData.featuredImageCaption}</small>
                     <h1 className="text-3xl font-extrabold my-3" ref={ref}>{postData.title}</h1>

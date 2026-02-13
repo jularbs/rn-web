@@ -12,6 +12,7 @@ import { ConstructionIcon, LoaderCircleIcon } from "lucide-react";
 import { useInView } from "react-intersection-observer";
 import { format } from "date-fns";
 import { toast } from "sonner";
+import { Badge } from "./ui/badge";
 
 export function PostsLandingPageComponent(): React.JSX.Element {
 
@@ -92,6 +93,9 @@ export function PostsLandingPageComponent(): React.JSX.Element {
                                         fill
                                         className="absolute inset-0 object-cover group-hover:scale-110 transition-transform duration-300" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-blue-gradient-start opacity-80 mt-1/3" />
+                                    <div className="absolute top-0 right-0 text-white p-3">
+                                        {item.isFeatured && <Badge className="px-3 bg-radyonatin-blue font-bold">Featured</Badge>}
+                                    </div>
                                 </div>
                                 <h2 className={`text-xl md:text-2xl lg:text-3xl leading-[1.1] font-extrabold mt-5 mb-3`}>{item.title}</h2>
                                 <p className="text-sm font-medium">{item.publishedAt ? format(new Date(item.publishedAt), "PP p") : "N/A"}</p>
@@ -113,6 +117,9 @@ export function PostsLandingPageComponent(): React.JSX.Element {
                                 <p className="text-xs line-clamp-2 leading-relaxed">
                                     {item.excerpt}
                                 </p>
+                            </div>
+                            <div className="absolute top-0 right-0 text-white p-1">
+                                {item.isFeatured && <Badge className="px-2 text-[10px] bg-radyonatin-blue">Featured</Badge>}
                             </div>
                         </div>
                     </div>
