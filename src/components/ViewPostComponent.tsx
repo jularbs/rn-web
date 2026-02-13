@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import { open_sans } from "@/app/fonts";
 import ContentComponent from "@/components/ContentComponent/ContentComponent";
 import FacebookShareComponent from "@/components/FacebookShareComponent";
@@ -8,16 +9,20 @@ import TwitterShareComponent from "@/components/TwitterShareComponent";
 import { cn, getImageSource } from "@/lib/utils";
 import { format } from "date-fns";
 import Image from "next/image";
-import { ArrowLeftIcon, Share2Icon } from "lucide-react";
+import { ArrowLeftIcon, Share2Icon, X } from "lucide-react";
 import { IPost } from "@/types/post";
 import { useInView } from "react-intersection-observer";
 import { useRouter } from "next/navigation";
 import { StationDetailsComponent } from "./StationDetailsComponent";
 import { Badge } from "./ui/badge";
+import { IoPlay } from "react-icons/io5";
+import ReactPlayer from "react-player";
+import { Button } from "./ui/button";
 
 export default function ViewPostComponent({ postData }: { postData: IPost }): React.JSX.Element {
     const router = useRouter();
-    const { ref, inView } = useInView({ threshold: 1 });
+    const { ref, inView } = useInView({ threshold: 1, initialInView: true });
+    const [showVideo, setShowVideo] = useState(false);
 
     const showTags = () => {
         return <div className="flex flex-wrap gap-2 items-center">
@@ -29,10 +34,10 @@ export default function ViewPostComponent({ postData }: { postData: IPost }): Re
     }
 
     return <>
-        <div className={cn("flex opacity-0 items-center gap-2 h-[60px] py-1 px-3 border-b-3 border-radyonatin-blue bg-white",
-            "z-40 sticky top-logo-container-height",
+        <div className={cn("flex items-center gap-2 h-[60px] py-1 px-3 border-b-3 border-radyonatin-blue bg-white",
+            "sticky top-logo-container-height",
             "md:p-1 md:gap-2 md:h-[80px] md:top-searchbar-container-height",
-            "opacity-0 transition-opacity duration-300", !inView ? "opacity-100" : ""
+            "opacity-0 transition-opacity duration-300", !inView ? "opacity-100" : "opacity-0"
         )}>
             <div className="px-2 md:hidden"
                 onClick={() => router.back()}>
@@ -57,6 +62,26 @@ export default function ViewPostComponent({ postData }: { postData: IPost }): Re
                         <div className="absolute top-0 right-0 text-white p-3">
                             {postData.isFeatured && <Badge className="px-3 font-bold bg-radyonatin-blue">Featured</Badge>}
                         </div>
+                        {postData.type === "video article" && postData.videoSourceUrl && <div>
+                            <div className="absolute inset-0 m-auto flex justify-center items-center">
+                                <Button className="cursor-pointer bg-radyonatin-yellow/90 hover:bg-radyonatin-yellow text-black rounded-sm"
+                                    onClick={() => { setShowVideo(true) }}>
+                                    <IoPlay />
+                                    <span className="text-xs font-bold">Play Video</span>
+                                </Button>
+                            </div>
+                            {showVideo && <div className="absolute inset-0">
+                                <ReactPlayer url={postData.videoSourceUrl} playing={showVideo} controls={true} width="100%" height="100%" />
+                                <Button
+                                    size={"sm"}
+                                    variant={"secondary"}
+                                    onClick={() => setShowVideo(false)}
+                                    className="absolute cursor-pointer top-2 left-2 rounded-sm opacity-50 hover:bg-secondary hover:opacity-100 transition-opacity duration-300">
+                                    <X />
+                                    <span className="text-xs">Close</span>
+                                </Button>
+                            </div>}
+                        </div>}
                     </div>
                     <small className="p-1 text-neutral-500">{postData.featuredImageCaption}</small>
                     <h1 className="text-3xl font-extrabold my-3" ref={ref}>{postData.title}</h1>
