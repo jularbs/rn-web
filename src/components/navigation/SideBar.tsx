@@ -208,7 +208,7 @@ export function Sidebar({ }): React.JSX.Element {
                             </Link>
                         </li>
                         <li className="py-2 font-semibold" >
-                            <Link href={`https://mbcmediagroup.com/our-businesses/radio`} aria-label="Go to Advertise With Us page">
+                            <Link href={`https://mbcmediagroup.com/our-businesses/radio`} aria-label="Go to Advertise With Us page" target="__blank">
                                 Advertise With Us
                             </Link>
                         </li>
