@@ -22,7 +22,7 @@ import AdComponent from "./AdComponent";
 
 export default function ViewPostComponent({ postData }: { postData: IPost }): React.JSX.Element {
     const router = useRouter();
-    const { ref, inView } = useInView({ threshold: 1, initialInView: true });
+    const { ref, inView } = useInView({ threshold: .1, initialInView: true });
     const [showVideo, setShowVideo] = useState(false);
 
     const showTags = () => {
