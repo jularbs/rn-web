@@ -56,7 +56,7 @@ export default function ViewPostComponent({ postData }: { postData: IPost }): Re
         <div className="flex flex-col xl:flex-row gap-5 p-5 -mt-[60px] md:-mt-[80px]">
             <div className="flex-1">
                 <div className={open_sans.className}>
-                    <div className="relative aspect-3/2 w-full bg-gray-200 rounded-md overflow-hidden">
+                    <div className="relative aspect-3/2 w-full bg-gray-200 rounded-md overflow-hidden" ref={ref}>
                         <Image src={getImageSource(postData.featuredImage)} alt="sample" fill
                             className="absolute inset-0 object-cover" />
                         <div className="absolute inset-0 bg-gradient-to-t from-blue-gradient-start opacity-80 mt-1/3" />
@@ -85,7 +85,7 @@ export default function ViewPostComponent({ postData }: { postData: IPost }): Re
                         </div>}
                     </div>
                     <small className="p-1 text-neutral-500">{postData.featuredImageCaption}</small>
-                    <h1 className="text-3xl font-extrabold my-3" ref={ref}>{postData.title}</h1>
+                    <h1 className="text-3xl font-extrabold my-3">{postData.title}</h1>
                     {postData.publishedAt && <p className="text-sm">{format(postData.publishedAt, "PPP")}</p>}
                 </div>
                 <ContentComponent content={postData.content} className={cn("mt-4 leading-loose font-semibold", open_sans.className)} />
