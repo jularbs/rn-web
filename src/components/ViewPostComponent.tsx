@@ -18,6 +18,7 @@ import { Badge } from "./ui/badge";
 import { IoPlay } from "react-icons/io5";
 import ReactPlayer from "react-player";
 import { Button } from "./ui/button";
+import AdComponent from "./AdComponent";
 
 export default function ViewPostComponent({ postData }: { postData: IPost }): React.JSX.Element {
     const router = useRouter();
@@ -37,7 +38,7 @@ export default function ViewPostComponent({ postData }: { postData: IPost }): Re
         <div className={cn("flex items-center gap-2 h-[60px] py-1 px-3 border-b-3 border-radyonatin-blue bg-white",
             "sticky top-logo-container-height",
             "md:p-1 md:gap-2 md:h-[80px] md:top-searchbar-container-height",
-            "opacity-0 transition-opacity duration-300", !inView ? "opacity-100" : "opacity-0"
+            "opacity-0 transition-opacity duration-200", !inView ? "opacity-100 z-10" : "opacity-0"
         )}>
             <div className="px-2 md:hidden"
                 onClick={() => router.back()}>
@@ -102,12 +103,13 @@ export default function ViewPostComponent({ postData }: { postData: IPost }): Re
                 <div className="sticky top-5">
                     <div className="flex justify-center items-center mb-3">
                         <div className="relative h-[250px] w-[300px] bg-gray-300 my-5">
+                            <AdComponent />
                         </div>
                     </div>
                     <div className="flex justify-center items-center mb-3">
                         <div className="relative h-[250px] w-[300px] bg-gray-300 my-5">
+                            <AdComponent />
                         </div>
-
                     </div>
                 </div>
             </div>

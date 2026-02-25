@@ -1,3 +1,4 @@
+import AdComponent from "@/components/AdComponent";
 import { DetailedRadioPlayer } from "@/components/DetailedRadioPlayer";
 import { LatestStoriesComponent } from "@/components/LatestStoriesComponent";
 import { StationDetailsComponent } from "@/components/StationDetailsComponent";
@@ -18,10 +19,12 @@ export default function Station() {
                 <div className="sticky top-5">
                     <div className="flex justify-center items-center mb-3">
                         <div className="relative h-[250px] w-[300px] bg-gray-300 my-5">
+                            <AdComponent />
                         </div>
                     </div>
                     <div className="flex justify-center items-center mb-3">
                         <div className="relative h-[250px] w-[300px] bg-gray-300 my-5">
+                            <AdComponent />
                         </div>
                     </div>
                 </div>

@@ -1,3 +1,4 @@
+import AdComponent from "@/components/AdComponent";
 import ContactUsForm from "@/components/ContactUsForm";
 import { LatestStoriesComponent } from "@/components/LatestStoriesComponent";
 import { Metadata } from "next";
@@ -16,10 +17,12 @@ export default function ContactUs() {
                 <div className="sticky top-5">
                     <div className="flex justify-center items-center mb-3">
                         <div className="relative h-[250px] w-[300px] bg-gray-300 my-5">
+                            <AdComponent />
                         </div>
                     </div>
                     <div className="flex justify-center items-center mb-3">
                         <div className="relative h-[250px] w-[300px] bg-gray-300 my-5">
+                            <AdComponent />
                         </div>
                     </div>
                 </div>

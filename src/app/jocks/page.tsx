@@ -1,4 +1,5 @@
 
+import AdComponent from "@/components/AdComponent";
 import JockListComponent from "@/components/JockListComponent";
 import { LatestStoriesComponent } from "@/components/LatestStoriesComponent";
 import { StationDetailsComponent } from "@/components/StationDetailsComponent";
@@ -38,12 +39,12 @@ export default function Jocks() {
                 <div className="sticky top-5">
                     <div className="flex justify-center items-center mb-3">
                         <div className="relative h-[250px] w-[300px] bg-gray-300 my-5">
-
+                            <AdComponent />
                         </div>
                     </div>
                     <div className="flex justify-center items-center mb-3">
                         <div className="relative h-[250px] w-[300px] bg-gray-300 my-5">
-
+                            <AdComponent />
                         </div>
                     </div>
                 </div>

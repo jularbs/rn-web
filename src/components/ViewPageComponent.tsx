@@ -5,6 +5,7 @@ import { LatestStoriesComponent } from "@/components/LatestStoriesComponent";
 import { cn } from "@/lib/utils";
 import { StationDetailsComponent } from "./StationDetailsComponent";
 import { IOptions } from "@/types/option";
+import AdComponent from "./AdComponent";
 
 export default function ViewPageComponent({ pageData }: { pageData: IOptions }): React.JSX.Element {
 
@@ -20,12 +21,13 @@ export default function ViewPageComponent({ pageData }: { pageData: IOptions }):
                 <div className="sticky top-5">
                     <div className="flex justify-center items-center mb-3">
                         <div className="relative h-[250px] w-[300px] bg-gray-300 my-5">
+                            <AdComponent />
                         </div>
                     </div>
                     <div className="flex justify-center items-center mb-3">
                         <div className="relative h-[250px] w-[300px] bg-gray-300 my-5">
+                            <AdComponent />
                         </div>
-
                     </div>
                 </div>
             </div>
