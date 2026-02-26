@@ -42,7 +42,7 @@ export async function generateMetadata({
         authors: postData.seoAuthor ? [{ name: postData.seoAuthor }] : undefined,
         publisher: postData.publisher,
         alternates: {
-            canonical: postData.canonicalUrl || `${process.env.NEXT_PUBLIC_WEB_DOMAIN}/post/${postData.slug}`,
+            canonical: `${process.env.NEXT_PUBLIC_WEB_DOMAIN}/post/${postData.slug}`,
         },
         robots: {
             index: postData.robotsIndex !== false,
