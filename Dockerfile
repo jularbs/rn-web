@@ -33,6 +33,7 @@ FROM base
 
   COPY --from=build /build/node_modules node_modules
   COPY --from=build /build/public public
+  COPY --from=build /build/next.config.ts next.config.ts
   COPY --from=build /build/.next .next
 
   CMD [ "npx", "next", "start" ]
