@@ -7,6 +7,10 @@ FROM node:24.14.0-slim AS base
 FROM base AS build
 
   WORKDIR /build
+  ENV NEXT_PUBLIC_DOMAIN=https://www.radyonatin.com.ph
+  ENV NEXT_PUBLIC_API_BASE_URL=https://www.radyonatin.com.ph/api
+  ENV NEXT_PUBLIC_MANAGE_DOMAIN=https://cms.radyonatin.com.ph
+  ENV NEXT_PUBLIC_ENV=production
 
   RUN npm i -g pnpm
 
