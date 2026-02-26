@@ -1,0 +1,11 @@
+node_modules
+dist
+.next
+
+README.md
+eslint.config.mjs
+ecosystem.config.js
+eslint.config.mjs
+
+.github
+.git
