@@ -16,7 +16,7 @@ FROM base AS build
   COPY package.json .
   RUN pnpm i --offline
 
-  COPY components.json next-env.d.ts next.config.ts postcss.config.mjs tsconfig.json ./
+  COPY components.json next.config.ts postcss.config.mjs tsconfig.json ./
   COPY src src
   COPY public public
 
