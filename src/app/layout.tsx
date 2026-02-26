@@ -13,6 +13,16 @@ import AdComponent from "@/components/AdComponent";
 export const metadata: Metadata = {
   title: "Radyo Natin",
   description: "radyonatin.com is the online home of Radyo Natin Nationwide, a radio network of MBC Media Group, and the biggest radio network in the Philippines.",
+  openGraph: {
+    images: [
+      {
+        url: '/opengraph-image.jpg', // Must be an absolute path from the public directory
+        width: 300,
+        height: 200,
+        alt: 'Radyo Natin PH',
+      },
+    ],
+  }
 };
 
 export default async function RootLayout({

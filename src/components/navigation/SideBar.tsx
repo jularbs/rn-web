@@ -7,6 +7,7 @@ import Image from "next/image";
 import { FaFacebook, FaHome, FaInstagram, FaPlay, FaTiktok } from "react-icons/fa";
 import { FaMusic, FaXTwitter, FaYoutube } from "react-icons/fa6";
 import { MdRadio } from "react-icons/md";
+import { BsFillCalendarHeartFill } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import { useSelectedStationContext } from "@/context/StationWrapper";
 import Link from "next/link";
@@ -101,7 +102,7 @@ export function Sidebar({ }): React.JSX.Element {
                         <li>
                             <LinkWithStationQuery href="/category/lifestyle" onClick={() => setIsMenuOpen(false)} aria-label="Go to homepage">
                                 <div className="flex gap-2 items-center py-3 uppercase font-semibold text-grey-header">
-                                    <IoNewspaper size={24} />
+                                    <BsFillCalendarHeartFill size={24} />
                                     <span>Lifestyle </span>
                                 </div>
                             </LinkWithStationQuery>
