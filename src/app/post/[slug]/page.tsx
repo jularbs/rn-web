@@ -42,7 +42,7 @@ export async function generateMetadata({
         authors: postData.seoAuthor ? [{ name: postData.seoAuthor }] : undefined,
         publisher: postData.publisher,
         alternates: {
-            canonical: `${process.env.NEXT_PUBLIC_WEB_DOMAIN}/post/${postData.slug}`,
+            canonical: `${process.env.NEXT_PUBLIC_DOMAIN}/post/${postData.slug}`,
         },
         robots: {
             index: postData.robotsIndex !== false,
@@ -52,7 +52,7 @@ export async function generateMetadata({
         openGraph: {
             title: postData.ogTitle || postData.metaTitle || postData.title,
             description: postData.ogDescription || postData.metaDescription || postData.excerpt || postData.title,
-            url: postData.ogUrl || postData.canonicalUrl || `${process.env.NEXT_PUBLIC_WEB_DOMAIN}/post/${postData.slug}`,
+            url: postData.ogUrl || `${process.env.NEXT_PUBLIC_DOMAIN}/post/${postData.slug}`,
             siteName: postData.ogSiteName || process.env.NEXT_PUBLIC_SITE_NAME,
             locale: postData.ogLocale || 'en_US',
             type: (postData.ogType as "article" | "website" | "book" | "profile" | "music.song" | "music.album" | "music.playlist" | "music.radio_station" | "video.movie" | "video.episode" | "video.tv_show" | "video.other") || 'article',
