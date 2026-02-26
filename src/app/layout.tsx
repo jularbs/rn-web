@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   openGraph: {
     images: [
       {
-        url: '/opengraph-image.jpg', // Must be an absolute path from the public directory
+        url: process.env.NEXT_PUBLIC_DOMAIN + '/opengraph-image.jpg', // Must be an absolute path from the public directory
         width: 300,
         height: 200,
         alt: 'Radyo Natin PH',
