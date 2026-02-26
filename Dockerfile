@@ -20,7 +20,7 @@ FROM base AS build
   COPY package.json .
   RUN pnpm i --offline
 
-  COPY components.json next.config.ts postcss.config.mjs tsconfig.json ./
+  COPY components.json next.config.js postcss.config.mjs tsconfig.json ./
   COPY src src
   COPY public public
 
@@ -33,7 +33,7 @@ FROM base
 
   COPY --from=build /build/node_modules node_modules
   COPY --from=build /build/public public
-  COPY --from=build /build/next.config.ts next.config.ts
+  COPY --from=build /build/next.config.js next.config.js
   COPY --from=build /build/.next .next
 
   CMD [ "npx", "next", "start" ]
