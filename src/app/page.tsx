@@ -1,3 +1,4 @@
+import AdComponent from "@/components/AdComponent";
 import { LatestStoriesComponent } from "@/components/LatestStoriesComponent";
 import { PostsLandingPageComponent } from "@/components/PostsLandingPageComponent";
 import { StationDetailsComponent } from "@/components/StationDetailsComponent";
@@ -11,11 +12,12 @@ export default function Home() {
         <LatestStoriesComponent />
         <div className="flex justify-center items-center mb-3">
           <div className="relative h-[250px] w-[300px] bg-gray-300 my-5">
-
+            <AdComponent />
           </div>
         </div>
         <div className="flex justify-center items-center mb-3">
           <div className="relative h-[250px] w-[300px] bg-gray-300 my-5">
+            <AdComponent />
           </div>
         </div>
       </div>

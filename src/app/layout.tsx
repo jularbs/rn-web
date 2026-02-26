@@ -8,6 +8,7 @@ import { AudioPlayerWrapper } from "@/context/AudioPlayerWrapper";
 import { Suspense } from "react";
 import { Toaster } from "@/components/ui/sonner"
 import { SearchComponent } from "@/components/SearchComponent";
+import AdComponent from "@/components/AdComponent";
 
 export const metadata: Metadata = {
   title: "Radyo Natin",
@@ -32,7 +33,7 @@ export default async function RootLayout({
                 <div className="flex-1">
                   <div className="hidden md:flex w-full bg-greyspace h-logo-container-height-md items-center justify-center">
                     <div className="relative h-[90px] w-full max-w-[728px] bg-gray-300">
-
+                      <AdComponent />
                     </div>
                   </div>
                   <SearchComponent />

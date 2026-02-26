@@ -1,4 +1,5 @@
 
+import AdComponent from "@/components/AdComponent";
 import FacebookShareComponent from "@/components/FacebookShareComponent";
 import { LatestStoriesComponent } from "@/components/LatestStoriesComponent";
 import SocialSharingButton from "@/components/SocialSharingButton";
@@ -30,10 +31,12 @@ export default function watch() {
                 <div className="sticky top-5">
                     <div className="flex justify-center items-center mb-3">
                         <div className="relative h-[250px] w-[300px] bg-gray-300 my-5">
+                            <AdComponent />
                         </div>
                     </div>
                     <div className="flex justify-center items-center mb-3">
                         <div className="relative h-[250px] w-[300px] bg-gray-300 my-5">
+                            <AdComponent />
                         </div>
                     </div>
                 </div>

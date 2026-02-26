@@ -18,10 +18,11 @@ import { Badge } from "./ui/badge";
 import { IoPlay } from "react-icons/io5";
 import ReactPlayer from "react-player";
 import { Button } from "./ui/button";
+import AdComponent from "./AdComponent";
 
 export default function ViewPostComponent({ postData }: { postData: IPost }): React.JSX.Element {
     const router = useRouter();
-    const { ref, inView } = useInView({ threshold: 1, initialInView: true });
+    const { ref, inView } = useInView({ threshold: .1, initialInView: true });
     const [showVideo, setShowVideo] = useState(false);
 
     const showTags = () => {
@@ -37,7 +38,7 @@ export default function ViewPostComponent({ postData }: { postData: IPost }): Re
         <div className={cn("flex items-center gap-2 h-[60px] py-1 px-3 border-b-3 border-radyonatin-blue bg-white",
             "sticky top-logo-container-height",
             "md:p-1 md:gap-2 md:h-[80px] md:top-searchbar-container-height",
-            "opacity-0 transition-opacity duration-300", !inView ? "opacity-100" : "opacity-0"
+            "opacity-0 transition-opacity duration-200", !inView ? "opacity-100 z-10" : "opacity-0"
         )}>
             <div className="px-2 md:hidden"
                 onClick={() => router.back()}>
@@ -55,7 +56,7 @@ export default function ViewPostComponent({ postData }: { postData: IPost }): Re
         <div className="flex flex-col xl:flex-row gap-5 p-5 -mt-[60px] md:-mt-[80px]">
             <div className="flex-1">
                 <div className={open_sans.className}>
-                    <div className="relative aspect-3/2 w-full bg-gray-200 rounded-md overflow-hidden">
+                    <div className="relative aspect-3/2 w-full bg-gray-200 rounded-md overflow-hidden" ref={ref}>
                         <Image src={getImageSource(postData.featuredImage)} alt="sample" fill
                             className="absolute inset-0 object-cover" />
                         <div className="absolute inset-0 bg-gradient-to-t from-blue-gradient-start opacity-80 mt-1/3" />
@@ -84,7 +85,7 @@ export default function ViewPostComponent({ postData }: { postData: IPost }): Re
                         </div>}
                     </div>
                     <small className="p-1 text-neutral-500">{postData.featuredImageCaption}</small>
-                    <h1 className="text-3xl font-extrabold my-3" ref={ref}>{postData.title}</h1>
+                    <h1 className="text-3xl font-extrabold my-3">{postData.title}</h1>
                     {postData.publishedAt && <p className="text-sm">{format(postData.publishedAt, "PPP")}</p>}
                 </div>
                 <ContentComponent content={postData.content} className={cn("mt-4 leading-loose font-semibold", open_sans.className)} />
@@ -102,12 +103,13 @@ export default function ViewPostComponent({ postData }: { postData: IPost }): Re
                 <div className="sticky top-5">
                     <div className="flex justify-center items-center mb-3">
                         <div className="relative h-[250px] w-[300px] bg-gray-300 my-5">
+                            <AdComponent />
                         </div>
                     </div>
                     <div className="flex justify-center items-center mb-3">
                         <div className="relative h-[250px] w-[300px] bg-gray-300 my-5">
+                            <AdComponent />
                         </div>
-
                     </div>
                 </div>
             </div>

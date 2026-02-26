@@ -4,6 +4,7 @@ import styles from "./ContentComponent.module.css";
 import Script from "next/script";
 import { splitContentExcludingEmbeds } from "@/lib/utils";
 import { Fragment } from "react";
+import AdComponent from "../AdComponent";
 
 declare global {
   interface Window {
@@ -57,10 +58,10 @@ const ContentComponent = ({
     if (typeof body !== "undefined") {
       timer = setTimeout(() => {
         if (hasTwitter) {
-          try { window.twttr?.widgets.load(); } catch {}
+          try { window.twttr?.widgets.load(); } catch { }
         }
         if (hasInstagram) {
-          try { window.instgrm?.Embeds.process(); } catch {}
+          try { window.instgrm?.Embeds.process(); } catch { }
         }
 
         // TikTok: ensure embeds initialize for any blockquotes without iframes
@@ -79,7 +80,7 @@ const ContentComponent = ({
                 }
               }
             });
-          } catch {}
+          } catch { }
         }
       }, 2000);
     }
@@ -99,7 +100,7 @@ const ContentComponent = ({
       frames.forEach((iframe) => {
         try {
           (iframe as HTMLIFrameElement).loading = 'eager';
-        } catch {}
+        } catch { }
         iframe.removeAttribute('loading');
       });
     };
@@ -123,7 +124,7 @@ const ContentComponent = ({
     };
 
     const reprocessTwitter = () => {
-      try { window.twttr?.widgets.load(); } catch {}
+      try { window.twttr?.widgets.load(); } catch { }
     };
     const reprocessTikTokImmediate = (scope?: Element | null) => {
       try {
@@ -140,7 +141,7 @@ const ContentComponent = ({
             }
           }
         });
-      } catch {}
+      } catch { }
     };
     const reprocessInstagramImmediate = (scope?: Element | null) => {
       try {
@@ -160,7 +161,7 @@ const ContentComponent = ({
           });
           window.instgrm?.Embeds.process();
         }
-      } catch {}
+      } catch { }
     };
 
     const scheduleTwitter = makeScheduler(reprocessTwitter);
@@ -171,7 +172,7 @@ const ContentComponent = ({
       for (const m of mutations) {
         if (m.type === 'attributes' && m.target instanceof HTMLIFrameElement && m.attributeName === 'loading') {
           if (m.target.getAttribute('loading') === 'lazy') {
-            try { m.target.loading = 'eager'; } catch {}
+            try { m.target.loading = 'eager'; } catch { }
             m.target.removeAttribute('loading');
           }
         }
@@ -231,14 +232,14 @@ const ContentComponent = ({
         }
 
         paragraphCount += 1;
-        const showAd = paragraphCount % 5 === 0;
+        const showAd = paragraphCount % 4 === 0;
 
         if (showAd) {
           return (
             <Fragment key={`para-${i}`}>
-              <div className="relative flex flex-grow flex-col justify-center bg-gray-100 mb-3">
-                <div className="relative flex justify-center w-full min-h-[250px] min-[468px]:min-h-[60px] min-[732px]:min-h-[90px] basis-0 grow">
-                  <span className="uppercase text-xs pt-1">Advertisement</span>
+              <div className="relative flex flex-grow flex-col justify-center h-[250px] min-md:h-[90px] min-xl:h-[250px]">
+                <div className="relative flex justify-center w-full basis-0 grow">
+                  <AdComponent />
                 </div>
               </div>
               <p dangerouslySetInnerHTML={{ __html: chunk }} />
@@ -249,7 +250,7 @@ const ContentComponent = ({
         return <p key={`para-${i}`} dangerouslySetInnerHTML={{ __html: chunk }} />;
       });
   }
-  
+
   return (
     <>
       {hasTikTok && (

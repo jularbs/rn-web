@@ -14,6 +14,7 @@ import { LinkWithStationQuery } from "../LinkWithStationQuery";
 import { Button } from "../ui/button";
 import { ABOUT_US_SLUG, PRIVACY_POLICY_SLUG, TERMS_OF_USE_SLUG } from "@/constants";
 import { IoNewspaper } from "react-icons/io5";
+import AdComponent from "../AdComponent";
 
 export function Sidebar({ }): React.JSX.Element {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -199,6 +200,7 @@ export function Sidebar({ }): React.JSX.Element {
                 )}
                 <div className="my-5 flex items-center justify-center">
                     <div className="relative h-[250px] w-[300px] bg-gray-300">
+                        <AdComponent />
                     </div>
                 </div>
                 <hr className="border-t border-gray-300 mx-10" />
