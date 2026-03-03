@@ -99,7 +99,7 @@ export function PostsLandingPageComponent({ category }: { category?: string }): 
                                     </div>
                                 </div>
                                 <h2 className={`text-xl md:text-2xl lg:text-3xl leading-[1.1] font-extrabold mt-5 mb-3`}>{item.title}</h2>
-                                <p className="text-sm font-medium">{item.publishedAt ? format(new Date(item.publishedAt), "PP p") : "N/A"}</p>
+                                <p className="text-sm font-medium">{item.publishedAt ? format(new Date(item.publishedAt), "MMMM dd, yyyy") : "N/A"}</p>
                             </div>
                         </Link>
                         <hr className="my-5 border-t border-gray-300" />

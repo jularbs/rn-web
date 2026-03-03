@@ -12,6 +12,7 @@ import { Button } from "./ui/button";
 import { ConstructionIcon, LoaderCircleIcon, SearchXIcon } from "lucide-react";
 import { IoArrowBack } from "react-icons/io5";
 import { useRouter, useSearchParams } from 'next/navigation';
+import { format } from "date-fns";
 
 export function SearchResultsComponent() {
     const searchParams = useSearchParams();
@@ -71,11 +72,7 @@ export function SearchResultsComponent() {
                     <div className="col-span-3">
                         <h4 className="text-sm font-extrabold leading-tight line-clamp-2 group-hover:underline mb-2">{post.title}</h4>
                         <p className="text-xs font-bold line-clamp-3 mb-2">{post.excerpt}</p>
-                        <p className="text-2xs">{new Date(post.publishedAt as Date).toLocaleDateString("en-US", {
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric"
-                        })}</p>
+                        <p className="text-2xs">{format(new Date(post.publishedAt as Date), "MMMM dd, yyyy")}</p>
                     </div>
                 </div>
             </Link>));

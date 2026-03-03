@@ -86,7 +86,7 @@ export default function ViewPostComponent({ postData }: { postData: IPost }): Re
                     </div>
                     <small className="p-1 text-neutral-500">{postData.featuredImageCaption}</small>
                     <h1 className="text-3xl font-extrabold my-3">{postData.title}</h1>
-                    {postData.publishedAt && <p className="text-sm">{format(postData.publishedAt, "PPP")}</p>}
+                    {postData.publishedAt && <p className="text-sm">{format(postData.publishedAt, "MMMM dd, yyyy")}</p>}
                 </div>
                 <ContentComponent content={postData.content} className={cn("mt-4 leading-loose font-semibold", open_sans.className)} />
                 {showTags()}

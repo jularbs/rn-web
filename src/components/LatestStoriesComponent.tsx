@@ -2,6 +2,7 @@
 import { fetcher } from "@/actions/swr";
 import { getImageSource } from "@/lib/utils";
 import { IPost } from "@/types/post";
+import { format } from "date-fns";
 import Image from "next/image"
 import Link from "next/link"
 import { useMemo } from "react";
@@ -67,11 +68,7 @@ export function LatestStoriesComponent({ }) {
                     <div className="col-span-3">
                         <h4 className="text-sm font-extrabold leading-tight line-clamp-2 group-hover:underline">{post.title}</h4>
                         <p className="text-xs font-bold line-clamp-2">{post.excerpt}</p>
-                        <p className="text-2xs">{new Date(post.publishedAt as Date).toLocaleDateString("en-US", {
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric"
-                        })}</p>
+                        <p className="text-2xs">{format(new Date(post.publishedAt as Date), "MMMM dd, yyyy")}</p>
                     </div>
                 </div>
             </Link>
