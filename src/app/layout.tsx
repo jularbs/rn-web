@@ -6,6 +6,7 @@ import { karla } from "./fonts";
 import { SelectedStationWrapper } from "@/context/StationWrapper";
 import { AudioPlayerWrapper } from "@/context/AudioPlayerWrapper";
 import { Suspense } from "react";
+import Script from "next/script";
 import { Toaster } from "@/components/ui/sonner"
 import { SearchComponent } from "@/components/SearchComponent";
 import AdComponent from "@/components/AdComponent";
@@ -34,6 +35,11 @@ export default async function RootLayout({
   return (
     <html lang="en" className={karla.className}>
       <body className={`antialiased !pointer-events-auto min-h-screen pb-radioplayer-height-md`}>
+        <Script
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2297912646116031"
+          strategy="afterInteractive"
+          crossOrigin="anonymous"
+        />
         <Toaster richColors={true} />
         <Suspense>
           <AudioPlayerWrapper>
