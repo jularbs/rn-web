@@ -10,6 +10,7 @@ import Script from "next/script";
 import { Toaster } from "@/components/ui/sonner"
 import { SearchComponent } from "@/components/SearchComponent";
 import AdComponent from "@/components/AdComponent";
+import { setupGtag } from "@/components/Gtag";
 
 export const metadata: Metadata = {
   title: "Radyo Natin",
@@ -31,6 +32,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  setupGtag()
 
   return (
     <html lang="en" className={karla.className}>
@@ -40,6 +42,7 @@ export default async function RootLayout({
           strategy="afterInteractive"
           crossOrigin="anonymous"
         />
+        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-FZ6PQCTQ5B" />
         <Toaster richColors={true} />
         <Suspense>
           <AudioPlayerWrapper>
